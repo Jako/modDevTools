@@ -3,7 +3,7 @@
 Rapid site development helper for MODX Revolution.
 
 - Author: Kireev Vitaly <kireevvit@gmail.com>
-- Further development: Thomas Jakobi <thomas.jakobi@partout.info>
+- Further development: Thomas Jakobi <office@treehillstudio.com>
 - License: GNU GPLv2
 
 ## Contribute
