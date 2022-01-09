@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Edit and Quick Edit chunks/templates from modDevTools CMP directly
 - Regenerate the chunks, templates and snippets usage link database in the CMP
-- Improved ExtJS display
+- Improved Ext JS display
 - Updated manager style
 - Search in CMP is case sensitive
 - Dropped Revo 2.2 compatibility
