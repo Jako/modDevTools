@@ -17,6 +17,7 @@
       "plugins": [
         {
           "name": "modDevTools",
+          "description": "Rapid site development helper for MODx Revolution",
           "file": "moddevtools.plugin.php",
           "events": [
             "OnChunkFormPrerender",
