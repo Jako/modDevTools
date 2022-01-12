@@ -26,7 +26,7 @@ class modDevTools
      */
     public function __construct(modX &$modx, array $config = array())
     {
-        $this->modx = &$modx;
+        $this->modx =& $modx;
         $this->namespace = $this->getOption('namespace', $config, $this->namespace);
 
         $corePath = $this->getOption('core_path', $config, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/' . $this->namespace . '/');
