@@ -797,7 +797,7 @@ class modDevTools
                 $message = print_r($message, 1);
             }
 
-            $this->modx->log(modX::LOG_LEVEL_ERROR, $message);
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message);
         }
     }
 

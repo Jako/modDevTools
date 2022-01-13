@@ -39,7 +39,7 @@ class modDevToolsRefreshProcessor extends modProcessor {
                     $this->modx->setLogLevel( xPDO::LOG_LEVEL_WARN ); // Change log level to WARN
                     $moddevtools->parseContent($object);
                     $this->modx->setLogLevel( xPDO::LOG_LEVEL_INFO ); // Change log level to INFO
-                    $this->modx->log(modX::LOG_LEVEL_INFO,
+                    $this->modx->log(xPDO::LOG_LEVEL_INFO,
                         'Regenerated links to ' . $this->map[$class]['type'] . ': ' .
                         $object->get($this->map[$class]['name']) . ' (' . $object->get('id') . ')'
                     );
@@ -47,7 +47,7 @@ class modDevToolsRefreshProcessor extends modProcessor {
             }
         }
 
-        $this->modx->log(modX::LOG_LEVEL_INFO, 'COMPLETED');
+        $this->modx->log(xPDO::LOG_LEVEL_INFO, 'COMPLETED');
         return $this->success();
     }
 }
