@@ -1,7 +1,6 @@
 modDevTools.panel.RegenerateForm = function (config) {
     config = config || {};
     Ext.applyIf(config, {
-        id: 'moddevtools-panel-regenerateform',
         cls: 'container form-with-labels',
         labelAlign: 'left',
         autoHeight: true,
@@ -16,7 +15,7 @@ modDevTools.panel.RegenerateForm = function (config) {
             id: 'regenerate-group',
             xtype: 'fieldset',
             cls: 'moddevtools-fieldset',
-            title: _('moddevtools_regenerate_filters'),
+            title: _('moddevtools.regenerate_filters'),
             layout: 'auto',
             defaults: {
                 style: {width: 'auto', float: 'left', marginRight: '25px'},
@@ -56,10 +55,10 @@ modDevTools.panel.RegenerateForm = function (config) {
         }],
         buttons: [{
             cls: 'primary-button',
-            text: _('moddevtools_regenerate'),
+            text: _('moddevtools.regenerate'),
             scope: this,
             handler: function () {
-                var form = Ext.getCmp('moddevtools-panel-regenerateform').getForm();
+                var form = this.getForm();
                 if (this.console === null || this.console === undefined || this.console.isDestroyed) {
                     this.console = MODx.load({
                         xtype: 'modx-console',

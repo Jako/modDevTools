@@ -3,6 +3,7 @@ modDevTools.panel.Elements = function (config) {
     Ext.apply(config, {
         border: false,
         baseCls: 'modx-formpanel',
+        cls: 'moddevtools-element-panel',
         layout: 'auto',
         width: '100%',
         editors: this.editors,

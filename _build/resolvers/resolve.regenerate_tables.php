@@ -1,22 +1,29 @@
 <?php
-/** @var array $options */
-/** @var xPDOObject $object */
+/**
+ * Resolve regenerate tables
+ *
+ * @package moddevtools
+ * @subpackage build
+ *
+ * @var array $options
+ * @var xPDOObject $object
+ */
+
+$success = true;
+
 if ($object->xpdo) {
+    /** @var modX $modx */
+    $modx =& $object->xpdo;
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            /** @var modX $modx */
-            $modx =& $object->xpdo;
-
             $processorsPath = $modx->getOption('moddevtools.core_path', null, $modx->getOption('core_path') . 'components/moddevtools/') . 'processors/';
-
-            $modx->runProcessor('mgr/tables/regenerate', array(
-                'filters' => array('modChunk', 'modTemplate', 'modResource')
-            ), array('processors_path' => $processorsPath));
-
+            $modx->runProcessor('mgr/tables/regenerate', [
+                'filters' => ['modChunk', 'modTemplate', 'modResource']
+            ], ['processors_path' => $processorsPath]);
+            $modx->log(xPDO::LOG_LEVEL_INFO, 'modDevTools tables regenerated.');
             break;
     }
 }
-$modx->log(xPDO::LOG_LEVEL_INFO, 'modDevTools tables regenerated.');
-return true;
+return $success;

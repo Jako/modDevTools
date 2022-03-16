@@ -1,0 +1,30 @@
+{
+  "name": "treehillstudio/moddevtools",
+  "description": "Rapid site development helper for MODx Revolution",
+  "authors": [
+    {
+      "name": "Vitaly Kireev",
+      "email": "kireevvit@gmail.com",
+      "homepage": "https://github.com/argnist"
+    },
+    {
+      "name": "Thomas Jakobi",
+      "email": "office@treehillstudio.com",
+      "homepage": "https://treehillstudio.com"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
+  "config": {
+    "platform": {
+      "php": "7.2.5"
+    }
+  },
+  "require": {
+    "php": ">=7.2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "TreehillStudio\\ModDevTools\\": "src/"
+    }
+  }
+}

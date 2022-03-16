@@ -1,12 +1,20 @@
 <?php
+/**
+ * Replace Elements content
+ */
 
-include_once MODX_CORE_PATH . 'model/modx/processors/element/update.class.php';
+// Compatibility between 2.x/3.x
+if (file_exists(MODX_PROCESSORS_PATH . 'element/update.class.php')) {
+    require_once MODX_PROCESSORS_PATH . 'element/update.class.php';
+} elseif (!class_exists('modElementUpdateProcessor')) {
+    class_alias(\MODX\Revolution\Processors\Element\Update::class, \modElementUpdateProcessor::class);
+}
 
 /**
  * Class modDevToolsReplaceProcessor
  */
-class modDevToolsReplaceProcessor extends modElementUpdateProcessor {
-
+class modDevToolsReplaceProcessor extends modElementUpdateProcessor
+{
     public $nameField = 'name';
     public $contentField = 'content';
 
@@ -14,7 +22,8 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor {
      * Run the processor, returning a modProcessorResponse object.
      * @return modProcessorResponse
      */
-    public function run() {
+    public function run()
+    {
         $this->classKey = $this->getProperty('class');
         switch ($this->classKey) {
             case 'modChunk':
@@ -27,7 +36,8 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor {
                 $this->permission = 'save_template';
                 $this->nameField = 'templatename';
                 break;
-            default: return false; break;
+            default:
+                return false;
         }
 
         return parent::run();
@@ -36,7 +46,8 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor {
     /**
      * @return boolean
      */
-    public function beforeSet() {
+    public function beforeSet()
+    {
         $props = $this->getProperties();
 
         $content = $this->object->getContent();
@@ -68,17 +79,15 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor {
     /**
      * @return array|string
      */
-    public function cleanup() {
-        $object = array(
+    public function cleanup()
+    {
+        $object = [
             'id' => $this->object->get('id'),
             'name' => $this->object->get($this->nameField),
             'class' => $this->classKey,
-            'content' => $this->modx->moddevtools->getSearchContent(
-                $this->object->get($this->contentField),
-                $this->getProperty('search'),
-                $this->getProperty('offset')),
+            'content' => $this->modx->moddevtools->getSearchContent($this->object->get($this->contentField), $this->getProperty('search'), $this->getProperty('offset')),
             'offset' => $this->getProperty('offset'),
-        );
+        ];
 
         return $this->success('', $object);
     }

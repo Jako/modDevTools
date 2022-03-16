@@ -1,18 +1,33 @@
-## modDevTools
+[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/-/modx-moddevtools-standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/modx-moddevtools-standard/)
+
+# modDevTools
 
 Rapid site development helper for MODx Revolution.
 
-Дополнение, которое помогает разработчикам быстрее и проще работать в админке MODX Revolution
+## Introduction
 
-## Copyright Information
+This MODX Extra adds a custom manager page that allows you to search and replace
+text in the content of chunks and templates. It also displays additional tabs in
+the chunk, snippet, template edit page. These additional tabs allow to edit the
+content of linked (used) elements in the current page.
 
-modDevTools is distributed as GPL (as MODx Revolution is), but the copyright owner
-(Kireev Vitaly) grants all users of modDevTools the ability to modify, distribute
-and use modDevTools in MODx development as they see fit, as long as attribution
-is given somewhere in the distributed source of all derivative works.
+## Installation
 
-### Donation Information
+MODX Package Management
 
-If you would like to make a contribution, you can send a payment to kireevvit@gmail.com by PayPal
+## Usage
 
-Если вы хотите вознаградить автора за разработку, можно послать платеж через PayPal на почту kireevvit@gmail.com, или на Яндекс-кошелек 41001474467368
+Install via package manager and use the custom manager page and the additional
+tabs in the chunk, snippet, template edit page.
+
+## Documentation
+
+For more information please read the [documentation](https://jako.github.io/modDevTools/).
+
+## License
+
+The project is licensed under the [GPLv2 license](https://github.com/Jako/modDevTools/blob/master/core/components/glossary/docs/license.md).
+
+## Translations
+
+Translations of the package can be made for the [Default Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-moddevtools-standard/) and the [System Setting Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-moddevtools-system-settings/)

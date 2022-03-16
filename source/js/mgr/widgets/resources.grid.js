@@ -7,8 +7,43 @@ modDevTools.grid.Resources = function (config) {
     this.config = config;
     Ext.applyIf(config, {
         url: modDevTools.config.connectorUrl,
-        fields: this.getFields(config),
-        columns: this.getColumns(config),
+        fields: ['id', 'pagetitle', 'description', 'published', 'createdon', 'actions', 'preview_url', 'template'],
+        columns: [{
+            header: _('id'),
+            dataIndex: 'id',
+            sortable: true,
+            width: 20
+        }, {
+            header: _('pagetitle'),
+            dataIndex: 'pagetitle',
+            sortable: true,
+            editable: true,
+            width: 150
+        }, {
+            header: _('published'),
+            dataIndex: 'published',
+            renderer: modDevTools.util.renderBoolean,
+            sortable: true,
+            width: 40
+        }, {
+            header: _('createdon'),
+            dataIndex: 'createdon',
+            renderer: Ext.util.Format.dateRenderer(MODx.config.manager_date_format + ' ' + MODx.config.manager_time_format),
+            sortable: true,
+            width: 50
+        }, {
+            header: _('moddevtools.grid_actions'),
+            dataIndex: 'actions',
+            renderer: modDevTools.util.renderActions,
+            sortable: false,
+            width: 60,
+            id: 'actions'
+        }, {
+            header: _('moddevtools.template'),
+            dataIndex: 'template',
+            sortable: false,
+            hidden: true
+        }],
         tbar: false,
         autoExpandColumn: 'pagetitle',
         baseParams: {
@@ -25,9 +60,7 @@ modDevTools.grid.Resources = function (config) {
             showPreview: true,
             scrollOffset: 0,
             getRowClass: function (rec) {
-                return !rec.data.published
-                    ? 'moddevtools-row-disabled'
-                    : '';
+                return (!rec.data.published) ? 'moddevtools-row-disabled' : '';
             }
         },
         paging: true,
@@ -114,7 +147,7 @@ Ext.extend(modDevTools.grid.Resources, MODx.grid.Grid, {
                 xtype: 'moddevtools-window-change-template',
                 record: r,
                 listeners: {
-                    'success': {
+                    success: {
                         fn: function () {
                             this.refresh();
                         }, scope: this
@@ -125,46 +158,6 @@ Ext.extend(modDevTools.grid.Resources, MODx.grid.Grid, {
         this.changeTemplateWindow.setValues(r);
         this.changeTemplateWindow.show(e.target);
         return true;
-    },
-    getFields: function () {
-        return ['id', 'pagetitle', 'description', 'published', 'createdon', 'actions', 'preview_url', 'template'];
-    },
-    getColumns: function () {
-        return [{
-            header: _('id'),
-            dataIndex: 'id',
-            sortable: true,
-            width: 20
-        }, {
-            header: _('pagetitle'),
-            dataIndex: 'pagetitle',
-            sortable: true,
-            editable: true,
-            width: 150
-        }, {
-            header: _('published'),
-            dataIndex: 'published',
-            renderer: modDevTools.util.renderBoolean,
-            sortable: true,
-            width: 40
-        }, {
-            header: _('createdon'),
-            dataIndex: 'createdon',
-            sortable: true,
-            width: 50
-        }, {
-            header: _('moddevtools_grid_actions'),
-            dataIndex: 'actions',
-            renderer: modDevTools.util.renderActions,
-            sortable: false,
-            width: 60,
-            id: 'actions'
-        }, {
-            header: _('moddevtools_template'),
-            dataIndex: 'template',
-            sortable: false,
-            hidden: true
-        }];
     },
     onClick: function (e) {
         var elem = e.getTarget('.action', 2, true);
@@ -185,10 +178,11 @@ Ext.extend(modDevTools.grid.Resources, MODx.grid.Grid, {
     }
 });
 Ext.reg('moddevtools-grid-resources', modDevTools.grid.Resources);
+
 modDevTools.window.ChangeTemplate = function (config) {
     config = config || {};
     Ext.applyIf(config, {
-        title: _('moddevtools_template_change'),
+        title: _('moddevtools.template_change'),
         url: modDevTools.config.connectorUrl,
         baseParams: {
             action: 'mgr/resource/changetemplate'

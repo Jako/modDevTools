@@ -14,14 +14,13 @@ $output = '<style type="text/css">
     #modx-setupoptions-form h2 { margin-bottom: 15px; }
 </style>';
 
-$values = array();
+$values = [];
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
         $output .= '<h2>Install modDevTools</h2>
 
-        <p>Thanks for installing modDevTools. This open source extra was
-        developed further by Treehill Studio - MODX development in 
-        Münsterland.</p>
+        <p>Thanks for installing modDevTools. This open source extra is 
+        maintained by Treehill Studio - MODX development in Münsterland.</p>
 
         <p>During the installation, we will collect some statistical data (the
         hostname, the IP address, the PHP version and the MODX version of your
@@ -36,8 +35,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_UPGRADE:
         $output .= '<h2>Upgrade modDevTools</h2>
 
-        <p>modDevTools will be upgraded. This open source extra was developed 
-        further by Treehill Studio - MODX development in Münsterland.</p>
+        <p>modDevTools will be upgraded. This open source extra is maintained 
+        by Treehill Studio - MODX development in Münsterland.</p>
 
         During the upgrade, we will collect some statistical data (the hostname,
         the IP address, the PHP version, the MODX version of your MODX

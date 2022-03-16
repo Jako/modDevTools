@@ -1,43 +1,47 @@
 <?php
 /**
- * Get a list of Items
+ * Get list Templates
  */
-class modDevToolsTemplateGetListProcessor extends modObjectGetListProcessor {
-	public $objectType = 'modTemplate';
-	public $classKey = 'modTemplate';
-	public $defaultSortField = 'modTemplate.templatename';
-	public $defaultSortDirection = 'ASC';
-	public $renderers = '';
 
+use TreehillStudio\ModDevTools\Processors\ObjectGetListProcessor;
 
-	/**
-	 * @param xPDOQuery $c
-	 *
-	 * @return xPDOQuery
-	 */
-	public function prepareQueryBeforeCount(xPDOQuery $c) {
-        $c->leftJoin('modDevToolsLink','Link','modTemplate.id=Link.parent');
-        $c->where(array(
+class modDevToolsTemplateGetListProcessor extends ObjectGetListProcessor
+{
+    public $classKey = 'modTemplate';
+    public $defaultSortField = 'modTemplate.templatename';
+    public $defaultSortDirection = 'ASC';
+    public $objectType = 'modTemplate';
+
+    /**
+     * {@inheritDoc}
+     * @param xPDOQuery $c
+     *
+     * @return xPDOQuery
+     */
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
+        $c->leftJoin('modDevToolsLink', 'Link', [$this->classKey . '.id = Link.child']);
+        $c->where([
             'Link.link_type' => $this->getProperty('link_type'),
             'Link.child' => $this->getProperty('child'),
-        ));
-		return $c;
-	}
+        ]);
+        return $c;
+    }
 
     /**
      * Prepare the row for iteration
      * @param xPDOObject $object
      * @return array
      */
-    public function prepareRow(xPDOObject $object) {
-        $array = array(
+    public function prepareRow(xPDOObject $object)
+    {
+        $array = [
             'id' => $object->get('id'),
             'name' => $object->get('templatename'),
             'snippet' => $object->get('content'),
-        );
+        ];
         return $array;
     }
-
 }
 
 return 'modDevToolsTemplateGetListProcessor';

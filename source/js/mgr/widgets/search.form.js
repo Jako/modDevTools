@@ -28,7 +28,7 @@ modDevTools.panel.SearchForm = function (config) {
                 items: [{
                     xtype: 'textfield', cls: 'col-sm-4',
                     id: 'search-string',
-                    fieldLabel: _('moddevtools_text_to_find'),
+                    fieldLabel: _('moddevtools.text_to_find'),
                     allowBlank: false,
                     anchor: '100%',
                     border: false,
@@ -47,7 +47,7 @@ modDevTools.panel.SearchForm = function (config) {
                 items: [{
                     xtype: 'textfield', cls: 'col-sm-4',
                     id: 'replace-string',
-                    fieldLabel: _('moddevtools_replace_with'),
+                    fieldLabel: _('moddevtools.replace_with'),
                     anchor: '100%',
                     border: false,
                     labelStyle: 'line-height:24px;',
@@ -66,7 +66,7 @@ modDevTools.panel.SearchForm = function (config) {
                     xtype: 'button',
                     cls: 'col-sm-4 primary-button',
                     align: 'left',
-                    text: _('moddevtools_find'),
+                    text: _('moddevtools.find'),
                     handler: this.submit,
                     scope: this,
                     anchor: '100%',
@@ -77,7 +77,7 @@ modDevTools.panel.SearchForm = function (config) {
             id: 'filter-group',
             xtype: 'fieldset',
             cls: 'moddevtools-fieldset',
-            title: _('moddevtools_search_filters'),
+            title: _('moddevtools.search_filters'),
             layout: 'auto',
             defaults: {
                 style: {width: 'auto', float: 'left', marginRight: '25px'},
@@ -136,7 +136,7 @@ modDevTools.panel.SearchForm = function (config) {
                                 }],
                                 bbar: [{
                                     xtype: 'button',
-                                    text: _('moddevtools_replace'),
+                                    text: _('moddevtools.replace'),
                                     record: i,
                                     handler: function (b) {
                                         this.replace(b, 0, 0);
@@ -144,7 +144,7 @@ modDevTools.panel.SearchForm = function (config) {
                                     scope: this
                                 }, {
                                     xtype: 'button',
-                                    text: _('moddevtools_replace_all'),
+                                    text: _('moddevtools.replace_all'),
                                     record: i,
                                     handler: function (b) {
                                         this.replace(b, 1, 0);
@@ -152,7 +152,7 @@ modDevTools.panel.SearchForm = function (config) {
                                     scope: this
                                 }, {
                                     xtype: 'button',
-                                    text: _('moddevtools_skip'),
+                                    text: _('moddevtools.skip'),
                                     record: i,
                                     handler: function (b) {
                                         this.replace(b, 0, 1);
@@ -160,7 +160,7 @@ modDevTools.panel.SearchForm = function (config) {
                                     scope: this
                                 }, '->', {
                                     xtype: 'button',
-                                    text: _('moddevtools_edit'),
+                                    text: _('moddevtools.edit'),
                                     record: i,
                                     item: foundItems[i],
                                     handler: function (b) {
@@ -169,7 +169,7 @@ modDevTools.panel.SearchForm = function (config) {
                                     scope: this
                                 }, {
                                     xtype: 'button',
-                                    text: _('moddevtools_quickedit'),
+                                    text: _('moddevtools.quickedit'),
                                     record: i,
                                     item: foundItems[i],
                                     handler: function (b) {
@@ -180,14 +180,14 @@ modDevTools.panel.SearchForm = function (config) {
                                                 id: b.item.id
                                             },
                                             listeners: {
-                                                'success': {
+                                                success: {
                                                     fn: function (r) {
                                                         var nameField = (b.item.type === 'template') ? 'templatename' : 'name';
                                                         var w = MODx.load({
                                                             xtype: 'modx-window-quick-update-' + b.item.type,
                                                             record: r.object,
                                                             listeners: {
-                                                                'success': {
+                                                                success: {
                                                                     fn: function (r) {
                                                                         this.replace(b, 0, 1);
                                                                         var newTitle = '<span dir="ltr">' + r.f.findField(nameField).getValue() + ' (' + w.record.id + ')</span>';
@@ -195,7 +195,7 @@ modDevTools.panel.SearchForm = function (config) {
                                                                     },
                                                                     scope: this
                                                                 },
-                                                                'hide': {
+                                                                hide: {
                                                                     fn: function () {
                                                                         this.destroy();
                                                                     }
@@ -217,7 +217,7 @@ modDevTools.panel.SearchForm = function (config) {
                         }
                     } else {
                         results.add({
-                            html: '<h3>' + _('moddevtools_notfound') + '</h3>',
+                            html: '<h3>' + _('moddevtools.notfound') + '</h3>',
                             style: {
                                 margin: '10px 0'
                             }
@@ -246,7 +246,7 @@ Ext.extend(modDevTools.panel.SearchForm, MODx.FormPanel, {
                 all: all
             },
             listeners: {
-                'success': {
+                success: {
                     fn: function (r) {
                         if (r.success && (typeof r.object !== 'undefined')) {
                             var element = Ext.getCmp('found-element-' + btn.record);

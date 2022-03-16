@@ -3,6 +3,7 @@ modDevTools.util.renderBoolean = function (value) {
         ? String.format('<span class="green">{0}</span>', _('yes'))
         : String.format('<span class="red">{0}</span>', _('no'));
 };
+
 modDevTools.util.getMenu = function (actions, grid, selected) {
     var menu = [];
     var cls, icon, title, action;
@@ -26,9 +27,12 @@ modDevTools.util.getMenu = function (actions, grid, selected) {
                 a['title'] = a['multiple'];
             }
         }
-        cls = a['cls'] ? a['cls'] : '';
-        icon = a['icon'] ? a['icon'] : '';
-        title = a['title'] ? a['title'] : a['title'];
+        if (!a['title']) {
+            continue;
+        }
+        cls = a['cls'] || '';
+        icon = a['icon'] || '';
+        title = a['title'] || '';
         action = a['action'] ? grid[a['action']] : '';
         menu.push({
             handler: action,
@@ -40,6 +44,7 @@ modDevTools.util.getMenu = function (actions, grid, selected) {
     }
     return menu;
 };
+
 modDevTools.util.renderActions = function (value, props, row) {
     var res = [];
     var cls, icon, title, action, item;
@@ -51,10 +56,10 @@ modDevTools.util.renderActions = function (value, props, row) {
         if (!a['button']) {
             continue;
         }
-        cls = a['cls'] ? a['cls'] : '';
-        icon = a['icon'] ? a['icon'] : '';
-        action = a['action'] ? a['action'] : '';
-        title = a['title'] ? a['title'] : '';
+        cls = a['cls'] || '';
+        icon = a['icon'] || '';
+        action = a['action'] || '';
+        title = a['title'] || '';
         item = String.format(
             '<li class="{0}"><a class="action" href="#" data-action="{2}" title="{3}"><i class="{1}"></i></a></li>',
             cls, icon, action, title
@@ -66,18 +71,19 @@ modDevTools.util.renderActions = function (value, props, row) {
         res.join('')
     );
 };
+
 modDevTools.util.addTab = function (tbp, opt) {
     var tabs = Ext.getCmp(tbp);
     if (tabs) {
         Ext.applyIf(opt, {
             id: 'modx-' + Ext.id() + '-tab',
- layout: 'form',
- labelAlign: 'left',
- autoHeight: true,
- defaults: {
+            layout: 'form',
+            labelAlign: 'left',
+            autoHeight: true,
+            defaults: {
                 border: false,
- msgTarget: 'side',
- width: 400
+                msgTarget: 'side',
+                width: 400
             }
         });
         tabs.add(opt);
