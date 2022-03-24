@@ -26,7 +26,7 @@ For more information please read the [documentation](https://jako.github.io/modD
 
 ## License
 
-The project is licensed under the [GPLv2 license](https://github.com/Jako/modDevTools/blob/master/core/components/glossary/docs/license.md).
+The project is licensed under the [GPLv2 license](https://github.com/Jako/modDevTools/blob/master/core/components/moddevtools/docs/license.md).
 
 ## Translations
 

@@ -1,10 +1,10 @@
-site_name: Glossary
+site_name: modDevTools
 docs_dir: docs
 site_dir: _build/site
 edit_uri: tree/master/docs
 
-repo_name: 'Jako/Glossary'
-repo_url: https://github.com/Jako/Glossary
+repo_name: 'Jako/modDevTools'
+repo_url: https://github.com/Jako/modDevTools
 
 copyright: '&copy; 2019-2022 <a href="https://treehillstudio.com">Treehill Studio</a>'
 
