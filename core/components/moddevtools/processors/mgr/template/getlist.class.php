@@ -20,7 +20,7 @@ class modDevToolsTemplateGetListProcessor extends ObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $c->leftJoin('modDevToolsLink', 'Link', [$this->classKey . '.id = Link.child']);
+        $c->leftJoin('modDevToolsLink', 'Link', [$this->classKey . '.id = Link.parent']);
         $c->where([
             'Link.link_type' => $this->getProperty('link_type'),
             'Link.child' => $this->getProperty('child'),

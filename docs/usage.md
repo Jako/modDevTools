@@ -52,7 +52,8 @@ current page. The following element pages contain the tabs listed below.
 On the Edit Resources page, a linked breadcrumb path is inserted title below the
 page title. You can click any section of this breadcrumb path to edit the
 clicked resource. There are two system settings for changing parts of this
-breadcrumb path.
+breadcrumb path. This breadcrumb path is not shown in MODX 3.x, since this
+version uses is an own breadcrumb path.
 
 ## System Settings
 

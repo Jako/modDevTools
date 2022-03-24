@@ -15,6 +15,11 @@ $primary: #00948e;
     min-width: 1em;
     text-align: center;
   }
+  .x-menu-no-icon & {
+    a.x-menu-item {
+      padding: 3px 10px;
+    }
+  }
 }
 
 #moddevtools-search-results {
@@ -41,6 +46,13 @@ $primary: #00948e;
   }
   .found-string {
     background: yellow;
+  }
+}
+
+#tools-panel-templates, #tools-panel-chunks, #tools-panel-snippets {
+  .x-toolbar-right .x-btn {
+    margin-right: 1px;
+    margin-left: 6px;
   }
 }
 

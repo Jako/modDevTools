@@ -3,6 +3,8 @@
  * Replace Elements content
  */
 
+use TreehillStudio\ModDevTools\ModDevTools;
+
 // Compatibility between 2.x/3.x
 if (file_exists(MODX_PROCESSORS_PATH . 'element/update.class.php')) {
     require_once MODX_PROCESSORS_PATH . 'element/update.class.php';
@@ -18,21 +20,37 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor
     public $nameField = 'name';
     public $contentField = 'content';
 
+    /** @var ModDevTools */
+    public $moddevtools;
+
+    /**
+     * {@inheritDoc}
+     * @param modX $modx A reference to the modX instance
+     * @param array $properties An array of properties
+     */
+    function __construct(modX &$modx, array $properties = [])
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('moddevtools.core_path', null, $this->modx->getOption('core_path') . 'components/moddevtools/');
+        $this->moddevtools = $this->modx->getService('moddevtools', 'ModDevTools', $corePath . 'model/moddevtools/');
+    }
+
     /**
      * Run the processor, returning a modProcessorResponse object.
-     * @return modProcessorResponse
+     * @return bool|modProcessorResponse
      */
     public function run()
     {
         $this->classKey = $this->getProperty('class');
         switch ($this->classKey) {
             case 'modChunk':
-                $this->object = 'chunk';
+                $this->objectType = 'chunk';
                 $this->permission = 'save_chunk';
                 $this->contentField = 'snippet';
                 break;
             case 'modTemplate':
-                $this->object = 'template';
+                $this->objectType = 'template';
                 $this->permission = 'save_template';
                 $this->nameField = 'templatename';
                 break;
@@ -85,7 +103,8 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor
             'id' => $this->object->get('id'),
             'name' => $this->object->get($this->nameField),
             'class' => $this->classKey,
-            'content' => $this->modx->moddevtools->getSearchContent($this->object->get($this->contentField), $this->getProperty('search'), $this->getProperty('offset')),
+            'content' => $this->moddevtools->getSearchContent($this->object->get($this->contentField), $this->getProperty('search'), $this->getProperty('offset')),
+            'type' => $this->objectType,
             'offset' => $this->getProperty('offset'),
         ];
 

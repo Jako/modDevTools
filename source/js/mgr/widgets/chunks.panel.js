@@ -1,7 +1,8 @@
 modDevTools.panel.Chunks = function (config) {
     config = config || {};
-    Ext.apply(config, {
+    Ext.applyIf(config, {
         id: 'tools-panel-chunks',
+        duplicateButtons: true,
         params: {
             action: 'mgr/chunk/getlist',
             parent: MODx.request.id,

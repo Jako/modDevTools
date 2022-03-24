@@ -10,6 +10,9 @@
   min-width: 1em;
   text-align: center;
 }
+.x-menu-no-icon .x-menu-list a.x-menu-item {
+  padding: 3px 10px;
+}
 
 #moddevtools-search-results .moddevtools-el-header {
   background-color: #ececec;
@@ -34,6 +37,11 @@
 }
 #moddevtools-search-results .found-string {
   background: yellow;
+}
+
+#tools-panel-templates .x-toolbar-right .x-btn, #tools-panel-chunks .x-toolbar-right .x-btn, #tools-panel-snippets .x-toolbar-right .x-btn {
+  margin-right: 1px;
+  margin-left: 6px;
 }
 
 #moddevtools-panel-overview .moddevtools-fieldset .x-fieldset-body {

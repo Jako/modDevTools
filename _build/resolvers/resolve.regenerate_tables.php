@@ -29,3 +29,4 @@ if ($object->xpdo) {
     }
 }
 return $success;
+    

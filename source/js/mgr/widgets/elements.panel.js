@@ -1,5 +1,7 @@
 modDevTools.panel.Elements = function (config) {
     config = config || {};
+    var panelId = (Ext.get('modx-content').query('.x-panel .container')) ? Ext.get('modx-content').query('.x-panel .container')[0].id : ''; //modx-panel-(chunk/template/...)
+    var panelType = (panelId) ? panelId.split('-').pop() : 'chunk';
     Ext.apply(config, {
         border: false,
         baseCls: 'modx-formpanel',
@@ -7,7 +9,8 @@ modDevTools.panel.Elements = function (config) {
         layout: 'auto',
         width: '100%',
         editors: this.editors,
-        parentPanel: config.ownerCt.ownerCt.ownerCt, //modx-panel-(chunk/template/...)
+        parentPanel: Ext.getCmp('modx-panel-' + panelType),
+        duplicateButtons: false,
         items: [{
             html: config.intro,
             border: false,
@@ -17,12 +20,16 @@ modDevTools.panel.Elements = function (config) {
             items: [{
                 layout: 'accordion',
                 border: false,
-                layoutConfig: {animate: true},
+                layoutConfig: {
+                    animate: true
+                },
                 defaults: {
                     renderHidden: true,
                     stateEvents: ["collapse", "expand"],
                     getState: function () {
-                        return {collapsed: this.collapsed};
+                        return {
+                            collapsed: this.collapsed
+                        };
                     },
                     border: false
                 },
@@ -30,22 +37,22 @@ modDevTools.panel.Elements = function (config) {
             }]
         }]
     });
-    this.getItems();
-    var tabs = config.ownerCt.ownerCt;
-    if (!tabs.isDevToolsEventSet) {
+    this.getElements();
+    var tabs = Ext.getCmp('modx-' + panelType + '-tabs');
+    if (tabs && !tabs.isDevToolsEventSet) {
         tabs.addListener('tabchange', function () {
             this.disableSaveButton(true);
         }, this);
         tabs.isDevToolsEventSet = true;
     }
     config.parentPanel.on('success', function () {
-        this.getItems();
+        this.getElements();
     }, this);
     this.config = config;
     modDevTools.panel.Elements.superclass.constructor.call(this, config);
 };
 Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
-    getItems: function () {
+    getElements: function () {
         var params = this.config.config;
         var baseParams = this.config.params;
         var store = new Ext.data.JsonStore({
@@ -63,6 +70,18 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                         for (var i = 0; i < records.length; i++) {
                             var r = records[i].data;
                             var saveElement = 'save' + params.element.charAt(0).toUpperCase() + params.element.substr(1);
+                            var duplicateButtons =
+                                ['->', {
+                                    xtype: 'button',
+                                    text: _('moddevtools.duplicate'),
+                                    handler: this.duplicateElement.createDelegate(this, [params.element, r.id], true),
+                                    scope: this
+                                }, {
+                                    xtype: 'button',
+                                    text: _('moddevtools.quickduplicate'),
+                                    handler: this.quickduplicateElement.createDelegate(this, [params.element, r.id], true),
+                                    scope: this
+                                }];
                             var item = {
                                 stateId: 'state' + r.id,
                                 id: 'tools-' + params.element + '-' + i,
@@ -79,10 +98,10 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                 keys: [{
                                     key: "s",
                                     ctrl: true,
-                                    scope: this,
                                     fn: function () {
                                         this.focusedButton.fireEvent('click');
-                                    }
+                                    },
+                                    scope: this
                                 }],
                                 autoHeight: true,
                                 items: [{
@@ -123,7 +142,8 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                                     this.focusedEditor = editor;
                                                     this.focusedButton = Ext.getCmp('save-' + params.element + '-' + editor.record.id);
                                                     this.disableSaveButton(true);
-                                                }, scope: this
+                                                },
+                                                scope: this
                                             },
                                             afterrender: {
                                                 fn: function (field) {
@@ -140,7 +160,8 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                                             _self.highlightElements(editor, name);
                                                         });
                                                     }
-                                                }, scope: this
+                                                },
+                                                scope: this
                                             }
                                         }
                                     }, this.loadProperties(r)],
@@ -155,33 +176,9 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                             key: MODx.config.keymap_save || 's',
                                             ctrl: true
                                         }],
-                                        currentPanel: this,
-                                        listeners: {
-                                            click: {
-                                                fn: function () {
-                                                    if (this.disabled) return false;
-                                                    var input = Ext.getCmp(this.input);
-                                                    this.setText(_('saving'));
-                                                    MODx.Ajax.request({
-                                                        url: MODx.config.connector_url,
-                                                        params: this.currentPanel.getUpdateParams(input),
-                                                        listeners: {
-                                                            success: {
-                                                                fn: function (r) {
-                                                                    if (r.success) {
-                                                                        input.value = input.getValue();
-                                                                        this.setDisabled(true);
-                                                                        this.setText(_('save'));
-                                                                    }
-                                                                },
-                                                                scope: this
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    }] : ''
+                                        handler: this.saveElement.createDelegate(this, [params.element + '-editor-' + r.id], true),
+                                        scope: this
+                                    }, (params.element === 'chunk' || params.element === 'template') ? duplicateButtons : []] : ''
                                 }],
                                 listeners: {
                                     beforecollapse: {
@@ -224,11 +221,121 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                 editor.getSession().removeMarker(id);
             }
         }
-        editor.$search.set({needle: name});
+        editor.$search.set({
+            needle: name
+        });
         var ranges = editor.$search.findAll(editor.session);
         for (var i = 0; i < ranges.length; i++) {
             editor.getSession().addMarker(ranges[i], "ace_selected-word", "text");
         }
         return ranges;
+    },
+    saveElement: function (btn, e, input) {
+        if (this.disabled) {
+            return false;
+        }
+        var editor = Ext.getCmp(input);
+        btn.setText(_('saving'));
+        MODx.Ajax.request({
+            url: MODx.config.connector_url,
+            params: this.getUpdateParams(editor),
+            listeners: {
+                success: {
+                    fn: function (r) {
+                        if (r.success) {
+                            editor.value = editor.getValue();
+                            btn.setDisabled(true);
+                            btn.setText(_('save'));
+                        }
+                    },
+                    scope: this
+                }
+            }
+        });
+    },
+    duplicateElement: function (btn, e, type, i) {
+        var nameField = (type === 'template') ? 'templatename' : 'name';
+        MODx.Ajax.request({
+            url: MODx.config.connector_url,
+            params: {
+                action: 'element/' + type + '/get',
+                id: i
+            },
+            listeners: {
+                success: {
+                    fn: function (r) {
+                        var rec = {
+                            id: r.object.id,
+                            type: type,
+                            name: _('duplicate_of', {name: r.object[nameField]}),
+                            source: r.object.source,
+                            static: r.object.static,
+                            static_file: r.object.static_file,
+                            category: r.object.category
+                        };
+                        var w = MODx.load({
+                            xtype: 'modx-window-element-duplicate',
+                            record: rec,
+                            listeners: {
+                                success: {
+                                    fn: function (r) {
+                                        var response = Ext.decode(r.a.response.responseText);
+                                        MODx.loadPage('element/' + rec.type + '/update', 'id=' + response.object.id);
+                                    },
+                                    scope: this
+                                },
+                                hide: {
+                                    fn: function () {
+                                        this.destroy();
+                                    }
+                                }
+                            }
+                        });
+                        w.show(e.target);
+                    },
+                    scope: this
+                }
+            }
+        });
+    },
+    quickduplicateElement: function (btn, e, type, i) {
+        var nameField = (type === 'template') ? 'templatename' : 'name';
+        MODx.Ajax.request({
+            url: MODx.config.connector_url,
+            params: {
+                action: 'element/' + type + '/get',
+                id: i
+            },
+            listeners: {
+                success: {
+                    fn: function (r) {
+                        var record = r.object;
+                        record[nameField] = _('duplicate_of', {name: record[nameField]});
+                        record.id = null;
+                        var w = MODx.load({
+                            xtype: 'modx-window-quick-create-' + type,
+                            title: _('quick_create_' + type),
+                            record: record,
+                            listeners: {
+                                success: {
+                                    fn: function () {
+                                        this.destroy();
+                                    }
+                                },
+                                hide: {
+                                    fn: function () {
+                                        this.destroy();
+                                    }
+                                }
+                            }
+                        });
+                        w.title += ': <span dir="ltr">' + w.record[nameField] + '</span>';
+                        w.setValues(record);
+                        w.show(btn.target);
+                    },
+                    scope: this
+                }
+            }
+        });
     }
 });

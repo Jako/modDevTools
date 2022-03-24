@@ -7,10 +7,26 @@ use TreehillStudio\ModDevTools\Processors\Processor;
 
 class modDevToolsSearchProcessor extends Processor
 {
-    public $map = [
-        'modChunk' => ['name' => 'name', 'content' => 'snippet', 'type' => 'chunk'],
-        'modTemplate' => ['name' => 'templatename', 'content' => 'content', 'type' => 'template']
-    ];
+    public $map;
+
+    public function initialize()
+    {
+        $this->map = [
+            'modChunk' => [
+                'nameField' => 'name',
+                'content' => 'snippet',
+                'type' => 'chunk',
+                'typeText' => $this->modx->lexicon('chunk')
+            ],
+            'modTemplate' => [
+                'nameField' => 'templatename',
+                'content' => 'content',
+                'type' => 'template',
+                'typeText' => $this->modx->lexicon('template')
+            ]
+        ];
+        return true;
+    }
 
     /**
      * Run the processor and return the result.
@@ -48,10 +64,11 @@ class modDevToolsSearchProcessor extends Processor
             $object = $element->toArray();
             $data[] = [
                 'id' => $object['id'],
-                'name' => $object[$this->map[$class]['name']],
+                'name' => $object[$this->map[$class]['nameField']],
                 'class' => $class,
                 'content' => $this->moddevtools->getSearchContent($object['content'], $search),
                 'type' => $this->map[$class]['type'],
+                'type_text' => $this->map[$class]['typeText'],
                 'offset' => 0
             ];
         }
