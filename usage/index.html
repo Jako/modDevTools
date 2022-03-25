@@ -337,22 +337,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#chunk" class="md-nav__link">
-    Chunk
+  <a href="#chunk-page" class="md-nav__link">
+    Chunk Page
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#template" class="md-nav__link">
-    Template
+  <a href="#template-page" class="md-nav__link">
+    Template Page
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#snippet" class="md-nav__link">
-    Snippet
+  <a href="#snippet-page" class="md-nav__link">
+    Snippet Page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-chunks-tab" class="md-nav__link">
+    Example Chunks Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-snippets-tab" class="md-nav__link">
+    Example Snippets Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-resources-tab" class="md-nav__link">
+    Example Resources Tab
   </a>
   
 </li>
@@ -452,22 +473,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#chunk" class="md-nav__link">
-    Chunk
+  <a href="#chunk-page" class="md-nav__link">
+    Chunk Page
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#template" class="md-nav__link">
-    Template
+  <a href="#template-page" class="md-nav__link">
+    Template Page
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#snippet" class="md-nav__link">
-    Snippet
+  <a href="#snippet-page" class="md-nav__link">
+    Snippet Page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-chunks-tab" class="md-nav__link">
+    Example Chunks Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-snippets-tab" class="md-nav__link">
+    Example Snippets Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-resources-tab" class="md-nav__link">
+    Example Resources Tab
   </a>
   
 </li>
@@ -523,6 +565,7 @@
 <p>The Extras menu contains a new entry modDevTools, which opens a separate manager
 page. page opens. It allows you to search and replace text in the contents of
 chunks and templates.</p>
+<p><img alt="img/search.png" src="../img/search.png" title="Search Manager Page" /></p>
 <p>Enter the string you want to search for and click the <code>Search</code> button. Below the
 search field there are checkboxes to limit the search to specific elements
 (chunks and templates).</p>
@@ -542,90 +585,97 @@ quickly edit the element.</p>
 <p>The editing page of chunks, snippets and templates contains some additional
 tabs. These tabs allow you to edit the content of linked (used) elements on the
 current page. The following element pages contain the tabs listed below.</p>
-<h3 id="chunk">Chunk</h3>
+<h3 id="chunk-page">Chunk Page</h3>
 <ul>
-<li><code>Templates</code> - The code of templates in which the currently edited chunk is called. If you have installed Ace, you can get an assignment of chunks in the template code.</li>
-<li><code>Chunks</code> - The code of chunks that are called in the currently edited chunk. Snippet parameters specified in the call and default snippet parameters related to chunks also appear here.</li>
-<li><code>Snippets</code> - The code of snippets that are called in the currently edited chunk. Under the code of snippets you can expand the description of their default settings.</li>
-<li><code>Resources</code> - List of resources that are included in the template or whose content is called in some way in this chunk. You can go to the edited resource, open it in the browser, quickly change the template or publishing status or delete it to the trash.</li>
+<li><code>Templates Tab</code> - The code of templates in which the currently edited chunk is called. If you have installed Ace, you, the chunk is highlighted in the template code.</li>
+<li><code>Chunks Tab</code> - The code of chunks that are called in the currently edited chunk. Snippet parameters specified in the call and default snippet parameters related to chunks also appear here.</li>
+<li><code>Snippets Tab</code> - The code of snippets that are called in the currently edited chunk. Below the snipped code you can expand the snippet properties with default values and descriptions.</li>
+<li><code>Resources Tab</code> - List of resources that are included in the template or whose content is called in some way in this chunk. You can go to the edited resource, open it in the browser, quickly change the template or publishing status or delete it to the trash.</li>
 </ul>
-<h3 id="template">Template</h3>
+<h3 id="template-page">Template Page</h3>
 <ul>
-<li><code>Chunks</code> - The code of chunks that are called in the currently edited template.</li>
-<li><code>Snippets</code> - The code of snippets that are called in the currently edited template.</li>
-<li><code>Resources</code> - A list of resources with the currently edited template.</li>
+<li><code>Chunks Tab</code> - The code of chunks that are called in the currently edited template.</li>
+<li><code>Snippets Tab</code> - The code of snippets that are called in the currently edited template.</li>
+<li><code>Resources Tab</code> - A list of resources with the currently edited template.</li>
 </ul>
-<h3 id="snippet">Snippet</h3>
+<h3 id="snippet-page">Snippet Page</h3>
 <ul>
-<li><code>Resources</code> - A list of resources where the currently edited snippet is called.</li>
+<li><code>Resources Tab</code> - A list of resources where the currently edited snippet is called.</li>
 </ul>
+<h3 id="example-chunks-tab">Example Chunks Tab</h3>
+<p><img alt="img/chunks.png" src="../img/chunks.png" title="Chunks Tab" /></p>
+<h3 id="example-snippets-tab">Example Snippets Tab</h3>
+<p><img alt="img/snippets.png" src="../img/snippets.png" title="Snippets Tab" /></p>
+<h3 id="example-resources-tab">Example Resources Tab</h3>
+<p><img alt="img/resources.png" src="../img/resources.png" title="Resources Tab" /></p>
 <h2 id="linked-breadcrumb-path">Linked Breadcrumb Path</h2>
 <p>On the Edit Resources page, a linked breadcrumb path is inserted title below the
 page title. You can click any section of this breadcrumb path to edit the
 clicked resource. There are two system settings for changing parts of this
 breadcrumb path. This breadcrumb path is not shown in MODX 3.x, since this
 version uses is an own breadcrumb path.</p>
+<p><img alt="img/breadcrumb.png" src="../img/breadcrumb.png" title="Bread Crumb" /></p>
 <h2 id="user-permissions">User permissions</h2>
 <p>modDevTools uses standard user access permissions:</p>
 <table>
 <thead>
 <tr>
-<th>Rights</th>
+<th>Permission</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>view_chunk &amp; view_template</td>
-<td>For access to search and replace strings (modDevTools menu)</td>
+<td>To open the <code>Search Page</code> to search and replace strings.</td>
 </tr>
 <tr>
 <td>save_chunk</td>
-<td>For changing strings in chunks in the <code>Chunks</code> tab and for string substitution in chunks in the search page.</td>
+<td>For changing strings in chunks in the <code>Chunks Tab</code> and for string replacement in chunks in the <code>Search Page</code>.</td>
 </tr>
 <tr>
 <td>save_snippet</td>
-<td>For changing strings in snippets in the <code>Snippets</code> tab.</td>
+<td>For changing strings in snippets in the <code>Snippets Tab</code>.</td>
 </tr>
 <tr>
 <td>save_template</td>
-<td>For changing strings in templates in the <code>Templates</code> tab and for string substitution in the search page.</td>
+<td>For changing strings in templates in the <code>Templates Tab</code> and for string replacement in the <code>Search Page</code>.</td>
 </tr>
 <tr>
 <td>view_chunk</td>
-<td>To display the <code>Chunks</code> tab</td>
+<td>To display the <code>Chunks Tab</code></td>
 </tr>
 <tr>
 <td>view_template</td>
-<td>To display the <code>Templates</code> tab</td>
+<td>To display the <code>Templates Tab</code></td>
 </tr>
 <tr>
 <td>view_snippet</td>
-<td>To display the <code>Snippets</code> tab</td>
+<td>To display the <code>Snippets Tab</code></td>
 </tr>
 <tr>
 <td>resource_tree</td>
-<td>To display the <code>Resources</code> tab</td>
+<td>To display the <code>Resources Tab</code></td>
 </tr>
 <tr>
 <td>edit_document</td>
-<td>To display an edit icon in the table on the <code>Resources</code> tab</td>
+<td>To display an edit icon in the table on the <code>Resources Tab</code></td>
 </tr>
 <tr>
 <td>save_document</td>
-<td>To change the template resource in the table on the <code>Resources</code> tab</td>
+<td>To change the template resource in the table on the <code>Resources Tab</code></td>
 </tr>
 <tr>
 <td>publish_document</td>
-<td>To change the publication status in the table on the <code>Resources</code> tab</td>
+<td>To change the publication status in the table on the <code>Resources Tab</code></td>
 </tr>
 <tr>
 <td>delete_document</td>
-<td>To remove the resource to the recycle bin in the table on the <code>Resources</code> tab</td>
+<td>To remove the resource to the recycle bin in the table on the <code>Resources Tab</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Attention:</strong> resource groups are not supported (yet?), i.e. if a resource
+<p><strong>Attention:</strong> resource groups are currently not supported, i.e. if a resource
 group is hidden from site managers in the mgr context, they can still see their
 resources it in the resource list.</p>
 <h2 id="system-settings">System Settings</h2>
