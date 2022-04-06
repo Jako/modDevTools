@@ -66,24 +66,26 @@ class modDevToolsReplaceProcessor extends modElementUpdateProcessor
      */
     public function beforeSet()
     {
-        $props = $this->getProperties();
+        $search = $this->getProperty('search', '');
+        $replace = $this->getProperty('replace', '');
+        $all = ($this->getProperty('all', 'false') === 'true' || $this->getProperty('all', false) === true);
 
         $content = $this->object->getContent();
 
-        if ($props['all']) {
-            $content = str_replace($props['search'], $props['replace'], $content);
+        if ($all) {
+            $content = str_replace($search, $replace, $content);
             $offset = 0;
         } else {
             $offset = (int)$this->getProperty('offset', 0);
             $offsetString = substr($content, 0, $offset);
             $newContent = substr($content, $offset);
-            $strings = explode($props['search'], $newContent, 2);
-            $newContent = implode($props['replace'], $strings);
+            $strings = explode($search, $newContent, 2);
+            $newContent = implode($replace, $strings);
 
-            if (strpos($strings[1], $props['search']) === false) {
+            if (strpos($strings[1], $search) === false) {
                 $offset = 0;
             } else {
-                $offset = $offset + strlen($strings[0]) + strlen($props['replace']);
+                $offset = $offset + strlen($strings[0]) + strlen($replace);
             }
             $content = $offsetString . $newContent;
         }
