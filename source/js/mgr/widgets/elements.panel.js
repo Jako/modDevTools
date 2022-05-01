@@ -40,8 +40,12 @@ modDevTools.panel.Elements = function (config) {
     this.getElements();
     var tabs = Ext.getCmp('modx-' + panelType + '-tabs');
     if (tabs && !tabs.isDevToolsEventSet) {
-        tabs.addListener('tabchange', function () {
-            this.disableSaveButton(true);
+        tabs.addListener('tabchange', function (tabs, tab) {
+            if (tab.id === 'moddevtools-template-chunks-tab' ||tab.id === 'moddevtools-template-snippets-tab') {
+                this.updateSaveButton(true);
+            } else {
+                this.updateSaveButton(false);
+            }
         }, this);
         tabs.isDevToolsEventSet = true;
     }
@@ -141,7 +145,7 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                                 fn: function (editor) {
                                                     this.focusedEditor = editor;
                                                     this.focusedButton = Ext.getCmp('save-' + params.element + '-' + editor.record.id);
-                                                    this.disableSaveButton(true);
+                                                    this.updateSaveButton(true);
                                                 },
                                                 scope: this
                                             },
@@ -208,10 +212,10 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
             snippet: input.getValue()
         };
     },
-    disableSaveButton: function (value) {
-        var btns = Ext.getCmp('modx-action-buttons');
-        if (btns && btns.get(0)) {
-            btns.get(0).setDisabled(value);
+    updateSaveButton: function (value) {
+        var saveBtn = Ext.getCmp('modx-abtn-save');
+        if (saveBtn) {
+            saveBtn.setDisabled(value);
         }
     },
     highlightElements: function (editor, name) {
