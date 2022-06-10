@@ -74,7 +74,7 @@ Ext.reg('moddevtools-panel-formtab', modDevTools.panel.FormTab);
 
 modDevTools.panel.Overview = function (config) {
     config = config || {};
-    this.ident = 'moddevtools-panel-overview' + Ext.id();
+    this.ident = 'moddevtools-panel-overview-' + Ext.id();
     this.panelOverviewTabs = [{
         xtype: 'moddevtools-panel-formtab',
         title: _('moddevtools.search'),
