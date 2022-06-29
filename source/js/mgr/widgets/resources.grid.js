@@ -3,7 +3,6 @@ modDevTools.grid.Resources = function (config) {
     if (!config.id) {
         config.id = 'moddevtools-grid-resources';
     }
-    this.sm = new Ext.grid.CheckboxSelectionModel();
     this.config = config;
     Ext.applyIf(config, {
         url: modDevTools.config.connectorUrl,
