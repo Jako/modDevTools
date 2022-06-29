@@ -95,6 +95,7 @@ modDevTools.panel.SearchForm = function (config) {
                 items: {
                     xtype: 'xcheckbox',
                     name: 'filters[modChunk]',
+                    hiddenName: 'filters[modChunk]',
                     id: 'moddevtools-search-chunks',
                     boxLabel: _('chunks'),
                     inputValue: 1,
@@ -105,6 +106,7 @@ modDevTools.panel.SearchForm = function (config) {
                 items: {
                     xtype: 'xcheckbox',
                     name: 'filters[modTemplate]',
+                    hiddenName: 'filters[modTemplate]',
                     id: 'moddevtools-search-templates',
                     boxLabel: _('templates'),
                     inputValue: 1,

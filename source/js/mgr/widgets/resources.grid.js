@@ -32,17 +32,16 @@ modDevTools.grid.Resources = function (config) {
             sortable: true,
             width: 50
         }, {
-            header: _('moddevtools.grid_actions'),
-            dataIndex: 'actions',
-            renderer: modDevTools.util.renderActions,
-            sortable: false,
-            width: 60,
-            id: 'actions'
-        }, {
             header: _('moddevtools.template'),
             dataIndex: 'template',
             sortable: false,
             hidden: true
+        }, {
+            header: _('moddevtools.grid_actions'),
+            renderer: modDevTools.util.renderActions,
+            width: 60,
+            menuDisabled: true,
+            id: 'actions'
         }],
         tbar: false,
         autoExpandColumn: 'pagetitle',

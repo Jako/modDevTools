@@ -23,8 +23,9 @@ modDevTools.panel.RegenerateForm = function (config) {
             },
             items: [{
                 items: {
-                    xtype: 'checkbox',
+                    xtype: 'xcheckbox',
                     name: 'filters[]',
+                    hiddenName: 'filters[]',
                     inputValue: 'modChunk',
                     id: 'moddevtools-search-chunks',
                     boxLabel: _('chunks'),
@@ -33,8 +34,9 @@ modDevTools.panel.RegenerateForm = function (config) {
                 }
             }, {
                 items: {
-                    xtype: 'checkbox',
+                    xtype: 'xcheckbox',
                     name: 'filters[]',
+                    hiddenName: 'filters[]',
                     inputValue: 'modTemplate',
                     id: 'moddevtools-search-templates',
                     boxLabel: _('templates'),
@@ -43,8 +45,9 @@ modDevTools.panel.RegenerateForm = function (config) {
                 }
             }, {
                 items: {
-                    xtype: 'checkbox',
+                    xtype: 'xcheckbox',
                     name: 'filters[]',
+                    hiddenName: 'filters[]',
                     inputValue: 'modResource',
                     id: 'moddevtools-search-resources',
                     boxLabel: _('resources'),
