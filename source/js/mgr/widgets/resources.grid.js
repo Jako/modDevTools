@@ -21,13 +21,13 @@ modDevTools.grid.Resources = function (config) {
         }, {
             header: _('published'),
             dataIndex: 'published',
-            renderer: modDevTools.util.renderBoolean,
+            renderer: modDevTools.util.yesnoRenderer,
             sortable: true,
             width: 40
         }, {
             header: _('createdon'),
             dataIndex: 'createdon',
-            renderer: Ext.util.Format.dateRenderer(MODx.config.manager_date_format + ' ' + MODx.config.manager_time_format),
+            renderer: modDevTools.util.dateRenderer(MODx.config.manager_date_format + ' ' + MODx.config.manager_time_format),
             sortable: true,
             width: 50
         }, {
@@ -37,7 +37,7 @@ modDevTools.grid.Resources = function (config) {
             hidden: true
         }, {
             header: _('moddevtools.grid_actions'),
-            renderer: modDevTools.util.renderActions,
+            renderer: modDevTools.util.actionsRenderer,
             width: 60,
             menuDisabled: true,
             id: 'actions'

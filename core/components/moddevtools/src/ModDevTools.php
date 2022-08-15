@@ -48,7 +48,7 @@ class ModDevTools
      * The version
      * @var string $version
      */
-    public $version = '1.3.3';
+    public $version = '1.3.4';
 
     /**
      * The class options

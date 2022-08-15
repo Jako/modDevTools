@@ -1,8 +1,19 @@
-modDevTools.util.renderBoolean = function (value) {
-    return value
-        ? String.format('<span class="green">{0}</span>', _('yes'))
-        : String.format('<span class="red">{0}</span>', _('no'));
+modDevTools.util.dateRenderer = function (format) {
+    return function (v) {
+        if (typeof v === 'string' && v !== '') {
+            var format = (format) ? format : MODx.config.manager_date_format + ' ' + MODx.config.manager_time_format;
+            var date = new Date(v.replace(/\s/, 'T'));
+            return Ext.util.Format.date(date, format);
+        } else {
+            return v;
+        }
+    }
 };
+
+modDevTools.util.yesnoRenderer = function (value, cell) {
+    cell.css = (parseInt(value) === 1 || value) ? 'green' : 'red';
+    return (parseInt(value) === 1 || value) ? _('yes') : _('no');
+}
 
 modDevTools.util.getMenu = function (actions, grid, selected) {
     var menu = [];
@@ -45,7 +56,7 @@ modDevTools.util.getMenu = function (actions, grid, selected) {
     return menu;
 };
 
-modDevTools.util.renderActions = function (value, props, row) {
+modDevTools.util.actionsRenderer = function (value, props, row) {
     var res = [];
     var cls, icon, title, action, item;
     for (var i in row.data.actions) {

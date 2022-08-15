@@ -81,12 +81,26 @@
   color: #555555;
 }
 
+.modx-grid-small .x-grid3-cell-inner {
+  padding: 8px 5px 8px 5px;
+}
+.modx-grid-small .x-grid3-hd-inner {
+  padding: 8px 18px 8px 5px;
+}
+.modx-grid-small .x-grid3-td-checker {
+  padding: 6px 0 0;
+}
+.modx-grid-small .x-grid3-td-checker.x-grid3-hd {
+  padding-top: 0;
+}
 .modx-grid-small .x-panel-tbar .x-toolbar {
   padding-top: 2px;
 }
 .modx-grid-small .x-panel-tbar .x-toolbar.x-small-editor .x-form-text {
-  padding-top: 6px;
-  padding-bottom: 5px;
+  padding: 3px 8px 2px 8px;
+}
+.modx-grid-small .x-panel-tbar .x-toolbar .x-btn {
+  padding: 4px 10px 4px 10px;
 }
 .modx-grid-small .x-panel-bbar .x-toolbar .x-btn {
   padding: 2px 2px;
@@ -102,9 +116,6 @@
 }
 .modx-grid-small .x-btn-icon.arrow_up button:before, .modx-grid-small .x-btn-icon.arrow_down button:before, .modx-grid-small .x-btn-icon.refresh button:before {
   line-height: 16px;
-}
-.modx-grid-small .x-grid3-cell-inner, .modx-grid-small .x-grid3-hd-inner {
-  padding: 8px 18px 8px 5px;
 }
 
 .treehillstudio_about {
