@@ -23,7 +23,7 @@ modDevTools.panel.RegenerateForm = function (config) {
             },
             items: [{
                 items: {
-                    xtype: 'xcheckbox',
+                    xtype: 'checkbox',
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modChunk',
@@ -34,7 +34,7 @@ modDevTools.panel.RegenerateForm = function (config) {
                 }
             }, {
                 items: {
-                    xtype: 'xcheckbox',
+                    xtype: 'checkbox',
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modTemplate',
@@ -45,7 +45,7 @@ modDevTools.panel.RegenerateForm = function (config) {
                 }
             }, {
                 items: {
-                    xtype: 'xcheckbox',
+                    xtype: 'checkbox',
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modResource',
