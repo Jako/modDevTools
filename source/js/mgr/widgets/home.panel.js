@@ -105,8 +105,8 @@ modDevTools.panel.Overview = function (config) {
                 };
             },
             autoScroll: true,
-            deferredRender: false,
-            forceLayout: true,
+            deferredRender: true,
+            forceLayout: false,
             defaults: {
                 layout: 'form',
                 autoHeight: true,
