@@ -1,7 +1,8 @@
 modDevTools.grid.Properties = function (config) {
     config = config || {};
+    this.ident = 'moddevtools-properties-' + Ext.id();
     Ext.applyIf(config, {
-        id: 'moddevtools-grid-properties-' + Ext.id(),
+        id: this.ident,
         url: modDevTools.config.connectorUrl,
         baseParams: {
             action: 'mgr/element/getproperties',
