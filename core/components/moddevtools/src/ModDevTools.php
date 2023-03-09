@@ -15,7 +15,6 @@ use modAccessibleObject;
 use modChunk;
 use modDevToolsLink;
 use modResource;
-use modSystemEvent;
 use modTemplate;
 use modX;
 use xPDO;
@@ -94,6 +93,13 @@ class ModDevTools
             'connectorUrl' => $assetsUrl . 'connector.php'
         ], $options);
 
+        $lexicon = $this->modx->getService('lexicon', 'modLexicon');
+        $lexicon->load($this->namespace . ':default');
+
+        $this->packageName = $this->modx->lexicon('moddevtools');
+
+        $this->modx->addPackage($this->namespace, $this->getOption('modelPath'));
+
         // Add default options
         $this->options = array_merge($this->options, [
             'debug' => (bool)$this->getOption('debug', $options, false),
@@ -116,11 +122,6 @@ class ModDevTools
             'pcreModifier' => 'u',
             'chunkSuffix' => '.chunk.tpl'
         ]);
-
-        $this->modx->addPackage($this->namespace, $this->getOption('modelPath'));
-
-        $lexicon = $this->modx->getService('lexicon', 'modLexicon');
-        $lexicon->load($this->namespace . ':default');
     }
 
     /**
