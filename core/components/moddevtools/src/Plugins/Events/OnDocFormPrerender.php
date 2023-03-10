@@ -147,7 +147,14 @@ class OnDocFormPrerender extends Plugin
                     crumbCmp._updatePanel(bd);
                 });
             });
-            </script>"
-        );
+            </script>");
+        if ($this->modx->hasPermission('edit_template')) {
+            $this->modx->controller->addHtml("<script>
+            Ext.onReady(function() {
+                var tempCombo = Ext.getCmp('modx-resource-template');
+                tempCombo.label.update(tempCombo.fieldLabel + '&nbsp;<a href=\"?a=element/template/update' + '&id=' + tempCombo.value + '\">' + _('edit') + '</a>');
+            });
+            </script>");
+        }
     }
 }
