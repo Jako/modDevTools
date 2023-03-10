@@ -5,8 +5,14 @@
  * @package moddevtools
  * @subpackage build
  *
+ * @var modX $modx
  * @var array $options
  */
+
+// Defaults
+$defaults = [
+    'regenerate_tables' => true,
+];
 
 $output = '<style type="text/css">
     #modx-setupoptions-panel { display: none; }
@@ -31,6 +37,10 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         <p>If you install this package, you are giving us your permission to
         collect, process and use that data for statistical purposes.</p>';
 
+        $output .= '<div style="position: relative">
+                        <input type="checkbox" name="link_elements" id="link_elements" '. (($defaults['regenerate_tables']) ? 'checked' : '').'> 
+                        <label for="link_elements" style="display: inline;">Generate element links during setup (switch off, if you experience a timeout during installing modDevTools).</label>
+                    </div>';
         break;
     case xPDOTransport::ACTION_UPGRADE:
         $output .= '<h2>Upgrade modDevTools</h2>
@@ -47,6 +57,10 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         <p>If you upgrade this package, you are giving us your permission to
         collect, process and use that data for statistical purposes.</p>';
 
+        $output .= '<div style="position: relative">
+                        <input type="checkbox" name="link_elements" id="link_elements" '. (($defaults['regenerate_tables']) ? 'checked' : '').'> 
+                        <label for="link_elements" style="display: inline;">Regenerate element links during setup (switch off, if you experience a timeout during installing modDevTools).</label>
+                    </div>';
         break;
     case xPDOTransport::ACTION_UNINSTALL:
         break;
