@@ -18,7 +18,7 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            if ($modx->getOption('regenerate_tables', $options, true)) {
+            if ($modx->getOption('regenerate_tables', $options, '1') == '1') {
                 $autoloadPath = $modx->getOption('moddevtools.core_path', null, $modx->getOption('core_path') . 'components/moddevtools/') . 'vendor/autoload.php';
                 require_once $autoloadPath;
                 $processorsPath = $modx->getOption('moddevtools.core_path', null, $modx->getOption('core_path') . 'components/moddevtools/') . 'processors/';

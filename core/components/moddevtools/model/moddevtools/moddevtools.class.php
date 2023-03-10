@@ -3,7 +3,7 @@
  * modDevTools
  *
  * Copyright 2014-2019 by Vitaly Kireev <kireevvit@gmail.com>
- * Copyright 2019-2022 by Thomas Jakobi <office@treehillstudio.com>
+ * Copyright 2019-2023 by Thomas Jakobi <office@treehillstudio.com>
  *
  * @package moddevtools
  * @subpackage classfile

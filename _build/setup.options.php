@@ -38,7 +38,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         collect, process and use that data for statistical purposes.</p>';
 
         $output .= '<div style="position: relative">
-                        <input type="checkbox" name="link_elements" id="link_elements" '. (($defaults['regenerate_tables']) ? 'checked' : '').'> 
+                        <input type="hidden" name="regenerate_tables" value="0">
+                        <input type="checkbox" name="regenerate_tables" id="regenerate_tables" ' . (($defaults['regenerate_tables']) ? 'checked' : '') . ' value="1"> 
                         <label for="link_elements" style="display: inline;">Generate element links during setup (switch off, if you experience a timeout during installing modDevTools).</label>
                     </div>';
         break;
@@ -58,7 +59,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         collect, process and use that data for statistical purposes.</p>';
 
         $output .= '<div style="position: relative">
-                        <input type="checkbox" name="link_elements" id="link_elements" '. (($defaults['regenerate_tables']) ? 'checked' : '').'> 
+                        <input type="hidden" name="regenerate_tables" value="0">
+                        <input type="checkbox" name="regenerate_tables" id="regenerate_tables" ' . (($defaults['regenerate_tables']) ? 'checked' : '') . ' value="1"> 
                         <label for="link_elements" style="display: inline;">Regenerate element links during setup (switch off, if you experience a timeout during installing modDevTools).</label>
                     </div>';
         break;

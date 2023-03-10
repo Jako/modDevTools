@@ -26,7 +26,7 @@ modDevTools.panel.Home = function (config) {
                     this.getEl().select('img').on('click', function () {
                         var msg = '<span style="display: inline-block; text-align: center;">&copy; 2014-2019 by Vitaly Kireev <a href="https://github.com/argnist" target="_blank">github.com/argnist</a><br>' +
                             '<img src="' + modDevTools.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + modDevTools.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio" style="margin-top: 10px"><br>' +
-                            '&copy; 2019-2022 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
+                            '&copy; 2019-2023 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
                         Ext.Msg.show({
                             title: _('moddevtools') + ' ' + modDevTools.config.version,
                             msg: msg,
