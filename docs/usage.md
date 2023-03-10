@@ -99,8 +99,8 @@ resources it in the resource list.
 modDevTools uses the following system settings in the `moddevtools` namespace
 and  in an additional tab on the custom manager page:
 
-| Setting                 | Description                                  | Default |
-|-------------------------|----------------------------------------------|---------|
-| Breadcrumb Limit        | Limit of displayed breadcrumb entries.       | 3       |
-| Debug                   | Log debug information in the MODX error log. | No      |
-| Show Breadcrumb Context | Show the context key in the breadcrumb path. | No      |
+| Key                                 | Name                    | Description                                  | Default |
+|-------------------------------------|-------------------------|----------------------------------------------|---------|
+| moddevtools.breadcrumb_limit        | Breadcrumb Limit        | Limit of displayed breadcrumb entries.       | 3       |
+| moddevtools.debug                   | Debug                   | Log debug information in the MODX error log. | No      |
+| moddevtools.show_breadcrumb_context | Show Breadcrumb Context | Show the context key in the breadcrumb path. | No      |
