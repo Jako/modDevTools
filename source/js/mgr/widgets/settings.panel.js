@@ -23,12 +23,17 @@ if (MODx.grid.SettingsGrid) {
 
     modDevTools.grid.SystemSettings = function (config) {
         config = config || {};
-        config.baseParams = {
-            action: 'system/settings/getList',
-            namespace: 'moddevtools',
-            area: MODx.request['area']
-        };
-        config.tbar = [];
+        Ext.applyIf(config, {
+            id: 'moddevtools-grid-systemsettings',
+            url: modDevTools.config.connectorUrl,
+            baseParams: {
+                action: 'mgr/settings/getlist',
+                area: MODx.request.area || ''
+            },
+            save_action: 'mgr/settings/updatefromgrid',
+            tbar: [],
+            queryParam: (modDevTools.config.modxversion >= 3) ? 'query' : 'key'
+        });
         modDevTools.grid.SystemSettings.superclass.constructor.call(this, config);
     };
     Ext.extend(modDevTools.grid.SystemSettings, MODx.grid.SettingsGrid, {
@@ -65,9 +70,7 @@ if (MODx.grid.SettingsGrid) {
                 grid: this,
                 listeners: {
                     success: {
-                        fn: function () {
-                            this.refresh();
-                        },
+                        fn: this.refresh,
                         scope: this
                     }
                 }
@@ -77,44 +80,47 @@ if (MODx.grid.SettingsGrid) {
             uss.show(e.target);
         },
         clearFilter: function () {
-            var ns = 'moddevtools';
-            var area = MODx.request['area'] ? MODx.request['area'] : '';
+            var area = MODx.request.area || '';
             this.getStore().baseParams = this.initialConfig.baseParams;
-            var acb = Ext.getCmp('modx-filter-area');
-            if (acb) {
-                acb.store.baseParams['namespace'] = ns;
-                acb.store.load();
-                acb.reset();
+            var filterArea = Ext.getCmp('modx-filter-area');
+            filterArea = filterArea || this.topToolbar.getComponent('filter-area');
+            if (filterArea) {
+                filterArea.store.load();
+                filterArea.reset();
             }
-            Ext.getCmp('modx-filter-namespace').setValue(ns);
-            Ext.getCmp('modx-filter-key').reset();
-            this.getStore().baseParams.namespace = ns;
+            var filterQuery = Ext.getCmp('modx-filter-' + this.config.queryParam)
+            filterQuery = filterQuery || this.topToolbar.getComponent('filter-query');
+            if (filterQuery) {
+                filterQuery.reset();
+            }
             this.getStore().baseParams.area = area;
-            this.getStore().baseParams.key = '';
+            this.getStore().baseParams[this.config.queryParam] = '';
             this.getBottomToolbar().changePage(1);
         },
         filterByKey: function (tf, newValue) {
-            this.getStore().baseParams.key = newValue;
-            this.getStore().baseParams.namespace = 'moddevtools';
+            this.getStore().baseParams[this.config.queryParam] = newValue;
             this.getBottomToolbar().changePage(1);
             return true;
         },
         filterByNamespace: function () {
-            this.getStore().baseParams['namespace'] = 'moddevtools';
-            this.getStore().baseParams['area'] = '';
+            this.getStore().baseParams.area = '';
             this.getBottomToolbar().changePage(1);
-            var acb = Ext.getCmp('modx-filter-area');
-            if (acb) {
-                var s = acb.store;
-                s.baseParams['namespace'] = 'moddevtools';
+            var filterArea = Ext.getCmp('modx-filter-area');
+            filterArea = filterArea || this.topToolbar.getComponent('filter-area');
+            if (filterArea) {
+                var s = filterArea.store;
                 s.removeAll();
                 s.load();
-                acb.setValue('');
+                filterArea.setValue('');
             }
         },
         listeners: {
-            afterrender: function () {
-                Ext.getCmp('modx-filter-namespace').hide();
+            afterrender: function (cmp) {
+                var filterNamespace = Ext.getCmp('modx-filter-namespace');
+                filterNamespace = filterNamespace || cmp.topToolbar.getComponent('filter-ns');
+                if (filterNamespace) {
+                    filterNamespace.hide();
+                }
             }
         }
     });
