@@ -24,7 +24,6 @@ $values = [];
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
         $output .= '<h2>Install modDevTools</h2>
-
         <p>Thanks for installing modDevTools. This open source extra is 
         maintained by Treehill Studio - MODX development in Münsterland.</p>
 
@@ -35,7 +34,9 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         parties.</p>
         
         <p>If you install this package, you are giving us your permission to
-        collect, process and use that data for statistical purposes.</p>';
+        collect, process and use that data for statistical purposes.</p>
+        
+        <p>Please review the installation options carefully.</p>';
 
         $output .= '<div style="position: relative">
                         <input type="hidden" name="regenerate_tables" value="0">
@@ -45,9 +46,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         break;
     case xPDOTransport::ACTION_UPGRADE:
         $output .= '<h2>Upgrade modDevTools</h2>
-
-        <p>modDevTools will be upgraded. This open source extra is maintained 
-        by Treehill Studio - MODX development in Münsterland.</p>
+        <p>modDevTools will be upgraded. This open source extra is maintained by
+        Treehill Studio - MODX development in Münsterland.</p>
 
         During the upgrade, we will collect some statistical data (the hostname,
         the IP address, the PHP version, the MODX version of your MODX
