@@ -104,7 +104,7 @@ class ModDevTools
         $this->options = array_merge($this->options, [
             'debug' => (bool)$this->getOption('debug', $options, false),
             'modxversion' => $modxversion['version'],
-            'is_admin' => $this->modx->user && ($this->modx->user->get('sudo') || $modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
+            'is_admin' => $this->modx->user && $this->modx->context && ($this->modx->user->get('sudo') || $modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
             'accessRegenerate' => $this->modx->user->get('sudo') || $this->modx->hasPermission('system_perform_maintenance_tasks'),
             'viewChunk' => $this->modx->user->get('sudo') || $this->modx->hasPermission('view_chunk'),
             'saveChunk' => $this->modx->user->get('sudo') || $this->modx->hasPermission('save_chunk'),
