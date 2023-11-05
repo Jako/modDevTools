@@ -108,7 +108,7 @@ class modDevToolsResourceGetListProcessor extends modResourceGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        $ta = parent::prepareRow($object);
+        $ta = $object->toArray('', false, true);
         $allowedFields = [
             'id' => true,
             'template' => true,

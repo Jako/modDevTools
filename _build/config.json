@@ -3,7 +3,7 @@
   "lowCaseName": "moddevtools",
   "description": "Rapid site development helper for MODx Revolution",
   "author": "Vitaly Kireev, Thomas Jakobi",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "package": {
     "menus": [
       {

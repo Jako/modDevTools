@@ -14,6 +14,13 @@
   padding: 3px 10px;
 }
 
+#modx-panel-resource .edit-template .icon {
+  color: #555555;
+}
+#modx-panel-resource .edit-template .icon:hover {
+  color: #3c3c3c;
+}
+
 #moddevtools-search-results .moddevtools-el-header {
   background-color: #ececec;
   padding: 10px;
@@ -207,4 +214,15 @@
   #modx-content > .x-panel-bwrap > .x-panel-body > .x-panel.modx3 .treehillstudio_about {
     margin: 0 15px;
   }
+}
+#modx-panel-resource.modx3 .edit-template .icon {
+  font-size: 11px;
+  color: #515151;
+  top: -1px;
+  left: 1px;
+  position: relative;
+}
+#modx-panel-resource.modx3 .edit-template .icon:hover {
+  font-size: 11px;
+  color: #383838;
 }

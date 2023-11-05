@@ -15,7 +15,36 @@ class OnDocFormPrerender extends Plugin
     {
         if ($this->moddevtools->getOption('modxversion') == 2) {
             $this->getBreadCrumbs();
+        } else {
+            $this->modx->controller->addHtml("<script>
+            Ext.onReady(function() {
+                var resourcePanel = Ext.getCmp('modx-panel-resource');
+                if (resourcePanel) {
+                    resourcePanel.addClass('modx3');
+                }
+            });
+            </script>");
         }
+
+        $assetsUrl = $this->moddevtools->getOption('assetsUrl');
+        $cssUrl = $this->moddevtools->getOption('cssUrl') . 'mgr/';
+        $cssSourceUrl = $assetsUrl . '../../../source/css/mgr/';
+
+        if ($this->moddevtools->getOption('debug') && ($assetsUrl != MODX_ASSETS_URL . 'components/moddevtools/')) {
+            $this->modx->controller->addCss($cssSourceUrl . 'moddevtools.css');
+        } else {
+            $this->modx->controller->addCss($cssUrl . 'moddevtools.min.css');
+        }
+
+        if ($this->modx->hasPermission('edit_template')) {
+            $this->modx->controller->addHtml("<script>
+            Ext.onReady(function() {
+                var templateCombo = Ext.getCmp('modx-resource-template');
+                templateCombo.label.update(templateCombo.fieldLabel + '&nbsp;<a class=\"edit-template\" href=\"?a=element/template/update' + '&id=' + templateCombo.value + '\"><i class=\"icon icon-edit\"></i></a>');
+            });
+            </script>");
+        }
+
     }
 
     /**
@@ -147,14 +176,6 @@ class OnDocFormPrerender extends Plugin
                     crumbCmp._updatePanel(bd);
                 });
             });
-            </script>");
-        if ($this->modx->hasPermission('edit_template')) {
-            $this->modx->controller->addHtml("<script>
-            Ext.onReady(function() {
-                var tempCombo = Ext.getCmp('modx-resource-template');
-                tempCombo.label.update(tempCombo.fieldLabel + '&nbsp;<a href=\"?a=element/template/update' + '&id=' + tempCombo.value + '\">' + _('edit') + '</a>');
-            });
-            </script>");
-        }
+        </script>");
     }
 }
