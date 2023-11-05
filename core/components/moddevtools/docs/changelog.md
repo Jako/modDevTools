@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Don't list all Resources as unpublished in MODX 3.x [#5]
 
-## [1.3.6] - 2022-03-10
+## [1.3.6] - 2023-03-10
 
 ### Added
 
