@@ -12,7 +12,7 @@
 require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 /**
- * Class Agenda
+ * Class modDevTools
  */
 class modDevTools extends \TreehillStudio\ModDevTools\ModDevTools
 {
