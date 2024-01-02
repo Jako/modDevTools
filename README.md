@@ -1,4 +1,4 @@
-[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/moddevtools/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/moddevtools/standard/)
+[![Default Lexicon](https://hosted.weblate.org/widget/modx-extras/moddevtools/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/moddevtools/standard/)
 
 # modDevTools
 
