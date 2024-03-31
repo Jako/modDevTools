@@ -111,7 +111,7 @@ const sassBreadcrumbs = function () {
 gulp.task('sass', gulp.series(sassMgr, sassBreadcrumbs));
 
 const imagesMgr = function () {
-    return gulp.src('./source/img/**/*.+(png|jpg|gif|svg)')
+    return gulp.src('./source/img/**/*.+(png|jpg|gif|svg)', {encoding: false})
         .pipe(gulp.dest('assets/components/moddevtools/img/'));
 };
 gulp.task('images', gulp.series(imagesMgr));
