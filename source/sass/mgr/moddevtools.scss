@@ -235,7 +235,7 @@ $primary: #00948e;
 
   &:before,
   &:after {
-    border: 5px solid mix(#000000, $red, 15);
+    border: 5px solid mix(#000000, $red, 15%);
     content: '';
     display: block;
     position: absolute;
