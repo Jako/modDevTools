@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $modx3-green: #6cb24a;
 $modx3-green-darken: #528738;
 $modx3-blue: #234368;
@@ -33,7 +35,7 @@ $modx3-blue: #234368;
 
       &:hover {
         font-size: 11px;
-        color: darken(#515151, 10);
+        color: color.adjust(#515151, $lightness: -10%);
       }
     }
   }
