@@ -24,6 +24,15 @@ class modDevToolsSystemSettingsGetlistProcessor extends modSystemSettingsGetList
 
     /**
      * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('moddevtools_' . $this->permission) : true;
+    }
+
+    /**
+     * {@inheritDoc}
      * @return array
      */
     public function prepareCriteria()
