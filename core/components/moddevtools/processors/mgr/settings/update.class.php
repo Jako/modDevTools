@@ -1,6 +1,6 @@
 <?php
 /**
- * Update System Setting
+ * Update a system setting
  *
  * @package moddevtools
  * @subpackage processors
@@ -25,6 +25,15 @@ class modDevToolsSystemSettingsUpdateProcessor extends modSystemSettingsUpdatePr
      * {@inheritDoc}
      * @return bool
      */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('moddevtools_' . $this->permission) : true;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return bool
+     */
     public function beforeSave()
     {
         $this->setProperty('namespace', 'moddevtools');
@@ -41,7 +50,6 @@ class modDevToolsSystemSettingsUpdateProcessor extends modSystemSettingsUpdatePr
     {
         $this->updateTranslations($this->getProperties());
         $this->clearCache();
-
         return parent::afterSave();
     }
 
@@ -54,7 +62,7 @@ class modDevToolsSystemSettingsUpdateProcessor extends modSystemSettingsUpdatePr
         if (strpos($key, 'moddevtools.') !== 0) {
             $this->addFieldError('key', $this->modx->lexicon('moddevtools.systemsetting_err_key_nv'));
         }
-        if (!$this->modx->hasPermission('settings') && !$this->modx->hasPermission('moddevtools_settings')) {
+        if (!$this->modx->hasPermission($this->permission) && !$this->modx->hasPermission('moddevtools_' . $this->permission)) {
             $this->addFieldError('usergroup', $this->modx->lexicon('moddevtools.systemsetting_err_usergroup_nv'));
         }
     }

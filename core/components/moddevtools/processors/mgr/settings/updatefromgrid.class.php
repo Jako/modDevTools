@@ -1,6 +1,6 @@
 <?php
 /**
- * Update System Setting
+ * Update a system setting
  *
  * @package moddevtools
  * @subpackage processors
