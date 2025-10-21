@@ -8,6 +8,6 @@
 $_lang['setting_moddevtools.breadcrumb_limit'] = 'Breadcrumb-Limit';
 $_lang['setting_moddevtools.breadcrumb_limit_desc'] = 'Limit der angezeigten Breadcrumb-Einträge.';
 $_lang['setting_moddevtools.debug'] = 'Debug';
-$_lang['setting_moddevtools.debug_desc'] = 'Log debug information in the MODX error log.';
+$_lang['setting_moddevtools.debug_desc'] = 'Debug-Informationen im MODX Fehlerprotokoll ausgeben.';
 $_lang['setting_moddevtools.show_breadcrumb_context'] = 'Breadcrumb-Kontext anzeigen';
 $_lang['setting_moddevtools.show_breadcrumb_context_desc'] = 'Zeigt den Kontextschlüssel im Breadcrumb-Pfad an.';
