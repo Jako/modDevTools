@@ -27,7 +27,7 @@ modDevTools.grid.Resources = function (config) {
         }, {
             header: _('createdon'),
             dataIndex: 'createdon',
-            renderer: modDevTools.util.dateRenderer(MODx.config.manager_date_format + ' ' + MODx.config.manager_time_format),
+            renderer: modDevTools.util.dateRenderer(),
             sortable: true,
             width: 50
         }, {
