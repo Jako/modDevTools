@@ -7,7 +7,7 @@
 if (file_exists(MODX_PROCESSORS_PATH . 'element/getinsertproperties.class.php')) {
     require_once MODX_PROCESSORS_PATH . 'element/getinsertproperties.class.php';
 } elseif (!class_exists('modResourceGetListProcessor')) {
-    class_alias(\MODX\Revolution\Processors\Element\modElementGetInsertProperties::class, \modElementGetInsertProperties::class);
+    class_alias(\MODX\Revolution\Processors\Element\GetInsertProperties::class, \modElementGetInsertProperties::class);
 }
 
 /**
@@ -32,8 +32,6 @@ class modDevToolsElementGetProperties extends modElementGetInsertProperties
         }
 
         return $this->outputArray($list);
-            $this->success('', $list);
-        return $this->toJSON($list);
     }
 }
 
