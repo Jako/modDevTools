@@ -18,6 +18,7 @@ extra_css = ["assets/stylesheets/treehillstudio.css"]
 
 [project.theme]
 custom_dir = "/Users/jako/Documents/MODX/Zensical/TreehillStudio"
+favicon = "assets/favicon.png"
 language = "en"
 features = [
     "announce.dismiss",
@@ -58,6 +59,10 @@ icon = "fontawesome/brands/github"
 link = "https://github.com/Jako"
 
 [project.markdown_extensions.attr_list]
+
+[project.markdown_extensions.admonition]
+
+[project.markdown_extensions.pymdownx.details]
 
 [project.markdown_extensions.pymdownx.emoji]
 emoji_index = "zensical.extensions.emoji.twemoji"
