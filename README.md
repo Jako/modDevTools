@@ -2,7 +2,7 @@
 
 # modDevTools
 
-Rapid site development helper for MODx Revolution.
+Rapid site development helper for MODX Revolution.
 
 ## Introduction
 

@@ -1,6 +1,7 @@
 {
   "name": "treehillstudio/moddevtools",
-  "description": "Rapid site development helper for MODx Revolution",
+  "description": "Rapid site development helper for MODX",
+  "version": "1.9.4",
   "authors": [
     {
       "name": "Vitaly Kireev",
