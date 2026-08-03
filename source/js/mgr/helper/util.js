@@ -23,26 +23,26 @@ modDevTools.util.getMenu = function (actions, grid, selected) {
             continue;
         }
         var a = actions[i];
-        if (!a['menu']) {
+        if (!data.menu) {
             if (a === '-') {
                 menu.push('-');
             }
             continue;
-        } else if (menu.length > 0 && /^remove/i.test(a['action'])) {
+        } else if (menu.length > 0 && /^remove/i.test(data.action)) {
             menu.push('-');
         }
         if (selected.length > 1) {
-            if (!a['multiple']) {
+            if (!data.multiple) {
                 continue;
-            } else if (typeof (a['multiple']) == 'string') {
-                a['title'] = a['multiple'];
+            } else if (typeof (data.multiple) == 'string') {
+                data.title = data.multiple;
             }
         }
-        if (!a['title']) {
+        if (!data.title) {
             continue;
         }
-        cls = a['cls'] || '';
-        icon = a['icon'] || '';
+        cls = data.cls || '';
+        icon = data.icon || '';
         title = a['title'] || '';
         action = a['action'] ? grid[a['action']] : '';
         menu.push({
