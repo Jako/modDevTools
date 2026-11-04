@@ -35,6 +35,8 @@ $_lang['moddevtools.search_desc'] = 'Suchen und Ersetzen von Text in Chunks und 
 $_lang['moddevtools.search_filters'] = 'Suche einschränken auf';
 $_lang['moddevtools.settings'] = '<i class="icon icon-cog"></i>';
 $_lang['moddevtools.settings_desc'] = 'Bearbeiten Sie die Einstellungen von modDevTools. Sie können den Wert einer Systemeinstellung mit einem Doppelklick auf die ‚Wert‘-Tabellenzelle oder die Systemeinstellung mit einem Rechtsklick in der Tabellenzelle bearbeiten.';
+$_lang['moddevtools.systemsetting_err_key_nv'] = 'Sie dürfen nur Einstellungen mit dem Prefix moddevtools bearbeiten.';
+$_lang['moddevtools.systemsetting_err_usergroup_nv'] = 'Nur Benutzer mit einer settings Berechtigung oder einer moddevtools_settings Berechtigung können die Einstellungen ändern.';
 $_lang['moddevtools.skip'] = 'Überspringen';
 $_lang['moddevtools.template'] = 'Template';
 $_lang['moddevtools.template_change'] = 'Template ändern';

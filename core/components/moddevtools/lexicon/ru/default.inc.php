@@ -35,6 +35,8 @@ $_lang['moddevtools.search_desc'] = 'Поиск и замена строк в ш
 $_lang['moddevtools.search_filters'] = 'Искать только в элементах';
 $_lang['moddevtools.settings'] = '<i class="icon icon-cog"></i>';
 $_lang['moddevtools.settings_desc'] = 'Редактирование настроек modDevTools. Вы можете редактировать значение системной настройки, дважды щелкнув по ячейке таблицы «значений» или щелкнув правой кнопкой мыши по ячейке таблицы.';
+$_lang['moddevtools.systemsetting_err_key_nv'] = 'Можно изменять только параметры с префиксом moddevtools.';
+$_lang['moddevtools.systemsetting_err_usergroup_nv'] = 'Изменять настройки могут только пользователи с правами settings или moddevtools_settings.';
 $_lang['moddevtools.skip'] = 'Пропустить';
 $_lang['moddevtools.template'] = 'шаблон';
 $_lang['moddevtools.template_change'] = 'Изменить шаблон';

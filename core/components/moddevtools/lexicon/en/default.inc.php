@@ -35,6 +35,8 @@ $_lang['moddevtools.search_desc'] = 'Search and replace strings in templates and
 $_lang['moddevtools.search_filters'] = 'Search only in elements';
 $_lang['moddevtools.settings'] = '<i class="icon icon-cog"></i>';
 $_lang['moddevtools.settings_desc'] = 'Edit the settings of modDevTools. You can edit the value of a system setting by double-clicking the ‘value’ table cell or by right-clicking in the table cell.';
+$_lang['moddevtools.systemsetting_err_key_nv'] = 'You could only edit settings with the prefix moddevtools.';
+$_lang['moddevtools.systemsetting_err_usergroup_nv'] = 'Only users with a settings permission or a moddevtools_settings permission are allowed to change settings.';
 $_lang['moddevtools.skip'] = 'Skip';
 $_lang['moddevtools.template'] = 'Template';
 $_lang['moddevtools.template_change'] = 'Change Template';
