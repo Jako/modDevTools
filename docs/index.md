@@ -20,7 +20,7 @@ resource edit page.
 
 ### License
 
-The project is licensed under the [GPLv2 license](https://github.com/Jako/modDevTools/LICENSE.md).
+The project is licensed under the [GPLv2 license](https://github.com/Jako/modDevTools/blob/master/LICENSE.md).
 
 ### Translations [![Default Lexicon](https://hosted.weblate.org/widget/modx-extras/moddevtools/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/moddevtools/)
 
