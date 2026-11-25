@@ -58,6 +58,8 @@ the element, showing the text that is removed (red) and the replacement
 don't want to change and click `Replace selected`. If the element was changed
 after the preview was created, nothing is replaced and you have to search again.
 
+![img/preview.png](img/moddevtools-preview.png "Preview of the replacements")
+
 There are also two other buttons on the right side below the code element:
 `Update` and `Quick Update`. When you click the `Update` button, the element's edit
 page opens. Clicking the `Quick Update` button opens a modal window where you can
