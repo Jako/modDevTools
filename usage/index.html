@@ -411,6 +411,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Search and replace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Search options
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Replace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refresh-the-element-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Refresh the element links
+      </span>
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -499,6 +538,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-edit-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Template edit link
+      </span>
+    </span>
+  </a>
   
 </li>
       
@@ -651,6 +701,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Search and replace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Search options
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Replace
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refresh-the-element-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Refresh the element links
+      </span>
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -743,6 +832,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#template-edit-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Template edit link
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#linked-breadcrumb-path" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -807,34 +907,94 @@
 <p>This MODX Extra adds some nice development features to the MODX manager.</p>
 <h2 id="search-and-replace">Search and replace</h2>
 <p>The Extras menu contains a new entry modDevTools, which opens a separate manager
-page. page opens. It allows you to search and replace text in the contents of
+page. It allows you to search and replace text in the contents of
 chunks and templates.</p>
 <p><a class="glightbox" data-type="image" href="../img/moddevtools-search.png"><img alt="img/search.png" src="../img/moddevtools-search.png" title="Search Manager Page" /></a></p>
-<p>Enter the string you want to search for and click the <code>Search</code> button. Below the
+<p>Enter the text you want to search for and click the <code>Search</code> button. Below the
 search field there are checkboxes to limit the search to specific elements
-(chunks and templates).</p>
+(chunks and templates). Static elements are searched in the current content of
+their file, even if it was changed outside of MODX, and replacements are written
+to that file.</p>
+<h3 id="search-options">Search options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Plain text</code></td>
+<td>The search text is searched literally. This is the default.</td>
+</tr>
+<tr>
+<td><code>Wildcards</code></td>
+<td><code>*</code> matches any text within a line and <code>?</code> any single character, e.g. <code>tpl*Row</code> or <code>Pre?s</code>.</td>
+</tr>
+<tr>
+<td><code>Regular expression</code></td>
+<td>The search text is a PCRE regular expression without delimiters, e.g. <code>&amp;limit=`(\d+)`</code>. <code>^</code> and <code>$</code> match at line ends.</td>
+</tr>
+<tr>
+<td><code>Ignore case</code></td>
+<td>Plain text only: ignores upper and lower case. Without this option the search is case-sensitive.</td>
+</tr>
+<tr>
+<td><code>Whole words only</code></td>
+<td>Plain text only: finds the search text only, if it isn't part of a longer word.</td>
+</tr>
+</tbody>
+</table>
+<p>A wildcard <code>*</code> matches as little text as possible. Put some text after it, since
+a trailing <code>*</code> matches nothing: <code>tpl*</code> only finds <code>tpl</code>.</p>
+<p>The wildcard and regular expression searches are always case-sensitive (a regular
+expression can start with <code>(?i)</code> to ignore the case and use <code>\b</code> for word
+boundaries).</p>
+<p>In the regular expression mode the replacement can contain the matched groups as
+<code>$1</code>, <code>${1}</code> or <code>\1</code> (<code>$0</code> is the whole match) and <code>\n</code> or <code>\t</code> for a new line
+or a tab. In the other modes the replacement is used literally. A search text
+that can match an empty text (e.g. <code>a*</code>) or an invalid regular expression is
+rejected.</p>
+<h3 id="replace">Replace</h3>
 <p>After a successful search, the code of all found elements is displayed, with the
-search text highlighted. A replacement must be made for each found element
-individually. For this purpose there are three buttons below the code block:
-<code>Replace</code>, <code>Replace all</code> and <code>Skip</code>.</p>
-<p>The <code>Replace</code> button replaces the search string at the position where the cursor
-is located (dark highlighting) with the replacement string. The <code>Skip</code> button
-moves the cursor to the next match. The <code>Replace All</code> button replaces all search
-strings in the code of the current element.</p>
+search text highlighted and the number of matches in the title. For each found
+element there are four buttons below the code block: <code>Replace</code>, <code>Replace all</code>,
+<code>Skip</code> and <code>Preview</code>.</p>
+<p>The <code>Replace</code> button replaces the match at the position where the cursor is
+located (dark highlighting) with the replacement and moves the cursor to the
+next match. The <code>Skip</code> button only moves the cursor to the next match, without
+changing the element. The <code>Replace All</code> button replaces all matches in the code
+of the current element.</p>
+<p>The <code>Preview</code> button opens a window with a list of all matches (up to 500) of
+the element, showing the text that is removed (red) and the replacement
+(green) in its line. All matches are selected at first. Untick the matches you
+don't want to change and click <code>Replace selected</code>. If the element was changed
+after the preview was created, nothing is replaced and you have to search again.</p>
+<p><a class="glightbox" data-type="image" href="../img/moddevtools-preview.png"><img alt="img/preview.png" src="../img/moddevtools-preview.png" title="Preview of the replacements" /></a></p>
 <p>There are also two other buttons on the right side below the code element:
 <code>Update</code> and <code>Quick Update</code>. When you click the <code>Update</code> button, the element's edit
 page opens. Clicking the <code>Quick Update</code> button opens a modal window where you can
 quickly edit the element.</p>
+<h2 id="refresh-the-element-links">Refresh the element links</h2>
+<p>The additional tabs on the element pages are filled from a table of the links
+between chunks, snippets, templates and resources. The links are updated, when a
+chunk, template or resource is saved, and they are created for all elements
+during the installation of the package.</p>
+<p>If elements were changed in another way, e.g. in static files, by an import or
+directly in the database, use the <code>Refresh</code> tab of the custom manager page. Select
+whether the links of chunks, templates and resources should be recreated and
+click the <code>Refresh</code> button.</p>
 <h2 id="edit-linked-elements">Edit linked elements</h2>
 <p>The editing page of chunks, snippets and templates contains some additional
 tabs. These tabs allow you to edit the content of linked (used) elements on the
 current page. The following element pages contain the tabs listed below.</p>
 <h3 id="chunk-page">Chunk Page</h3>
 <ul>
-<li><code>Templates Tab</code> - The code of templates in which the currently edited chunk is called. If you have installed Ace, you, the chunk is highlighted in the template code.</li>
+<li><code>Templates Tab</code> - The code of templates in which the currently edited chunk is called. If you have installed Ace, the chunk is highlighted in the template code.</li>
 <li><code>Chunks Tab</code> - The code of chunks that are called in the currently edited chunk. Snippet parameters specified in the call and default snippet parameters related to chunks also appear here.</li>
-<li><code>Snippets Tab</code> - The code of snippets that are called in the currently edited chunk. Below the snipped code you can expand the snippet properties with default values and descriptions.</li>
-<li><code>Resources Tab</code> - List of resources that are included in the template or whose content is called in some way in this chunk. You can go to the edited resource, open it in the browser, quickly change the template or publishing status or delete it to the trash.</li>
+<li><code>Snippets Tab</code> - The code of snippets that are called in the currently edited chunk. Below the snippet code you can expand the snippet properties with default values and descriptions.</li>
+<li><code>Resources Tab</code> - List of resources that are included in the template or whose content is called in some way in this chunk. You can go to the edited resource, open it in the browser, quickly change the template or publishing status or move it to the trash.</li>
 </ul>
 <h3 id="template-page">Template Page</h3>
 <ul>
@@ -852,12 +1012,15 @@ current page. The following element pages contain the tabs listed below.</p>
 <p><a class="glightbox" data-type="image" href="../img/moddevtools-snippets.png"><img alt="img/snippets.png" src="../img/moddevtools-snippets.png" title="Snippets Tab" /></a></p>
 <h4 id="example-resources-tab">Example Resources Tab</h4>
 <p><a class="glightbox" data-type="image" href="../img/moddevtools-resources.png"><img alt="img/resources.png" src="../img/moddevtools-resources.png" title="Resources Tab" /></a></p>
+<h2 id="template-edit-link">Template edit link</h2>
+<p>On the Edit Resources page, an edit icon next to the template field opens the
+edit page of the selected template.</p>
 <h2 id="linked-breadcrumb-path">Linked Breadcrumb Path</h2>
-<p>On the Edit Resources page, a linked breadcrumb path is inserted title below the
-page title. You can click any section of this breadcrumb path to edit the
-clicked resource. There are two system settings for changing parts of this
-breadcrumb path. This breadcrumb path is not shown in MODX 3.x, since this
-version uses is an own breadcrumb path.</p>
+<p>On the Edit Resources page, a linked breadcrumb path is inserted below the page
+title. You can click any section of this breadcrumb path to edit the clicked
+resource. There are two system settings for changing parts of this breadcrumb
+path. This breadcrumb path is not shown in MODX 3.x, since this version has its
+own breadcrumb path.</p>
 <p><a class="glightbox" data-type="image" href="../img/moddevtools-breadcrumb.png"><img alt="img/breadcrumb.png" src="../img/moddevtools-breadcrumb.png" title="Bread Crumb" /></a></p>
 <h2 id="user-permissions">User permissions</h2>
 <p>modDevTools uses standard user access permissions:</p>
@@ -871,11 +1034,11 @@ version uses is an own breadcrumb path.</p>
 <tbody>
 <tr>
 <td>view_chunk &amp; view_template</td>
-<td>To open the <code>Search Page</code> to search and replace strings.</td>
+<td>To open the custom manager page and search in chunks and templates.</td>
 </tr>
 <tr>
 <td>save_chunk</td>
-<td>For changing strings in chunks in the <code>Chunks Tab</code> and for string replacement in chunks in the <code>Search Page</code>.</td>
+<td>For changing strings in chunks in the <code>Chunks Tab</code> and for string replacement in chunks on the search page.</td>
 </tr>
 <tr>
 <td>save_snippet</td>
@@ -883,48 +1046,60 @@ version uses is an own breadcrumb path.</p>
 </tr>
 <tr>
 <td>save_template</td>
-<td>For changing strings in templates in the <code>Templates Tab</code> and for string replacement in the <code>Search Page</code>.</td>
+<td>For changing strings in templates in the <code>Templates Tab</code> and for string replacement in templates on the search page.</td>
 </tr>
 <tr>
 <td>view_chunk</td>
-<td>To display the <code>Chunks Tab</code></td>
+<td>To display the <code>Chunks Tab</code>.</td>
 </tr>
 <tr>
 <td>view_template</td>
-<td>To display the <code>Templates Tab</code></td>
+<td>To display the <code>Templates Tab</code>.</td>
 </tr>
 <tr>
 <td>view_snippet</td>
-<td>To display the <code>Snippets Tab</code></td>
+<td>To display the <code>Snippets Tab</code>.</td>
 </tr>
 <tr>
-<td>resource_tree</td>
-<td>To display the <code>Resources Tab</code></td>
+<td>view_document</td>
+<td>To display the <code>Resources Tab</code>.</td>
 </tr>
 <tr>
 <td>edit_document</td>
-<td>To display an edit icon in the table on the <code>Resources Tab</code></td>
+<td>To display an edit icon in the table on the <code>Resources Tab</code>.</td>
 </tr>
 <tr>
 <td>save_document</td>
-<td>To change the template resource in the table on the <code>Resources Tab</code></td>
+<td>To change the template of a resource in the table on the <code>Resources Tab</code>.</td>
 </tr>
 <tr>
 <td>publish_document</td>
-<td>To change the publication status in the table on the <code>Resources Tab</code></td>
+<td>To change the publication status in the table on the <code>Resources Tab</code>.</td>
 </tr>
 <tr>
 <td>delete_document</td>
-<td>To remove the resource to the recycle bin in the table on the <code>Resources Tab</code></td>
+<td>To move a resource to the trash in the table on the <code>Resources Tab</code>.</td>
+</tr>
+<tr>
+<td>edit_template</td>
+<td>To display the template edit icon on the Edit Resources page.</td>
+</tr>
+<tr>
+<td>system_perform_maintenance_tasks</td>
+<td>To refresh the element links in the <code>Refresh</code> tab.</td>
+</tr>
+<tr>
+<td>settings or moddevtools_settings</td>
+<td>To display the system settings tab of the custom manager page.</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Attention:</strong> resource groups are currently not supported, i.e. if a resource
-group is hidden from site managers in the mgr context, they can still see their
-resources it in the resource list.</p>
+group is hidden from site managers in the mgr context, they can still see its
+resources in the resource list.</p>
 <h2 id="system-settings">System Settings</h2>
 <p>modDevTools uses the following system settings in the <code>moddevtools</code> namespace
-and  in an additional tab on the custom manager page:</p>
+and shows them in an additional tab on the custom manager page:</p>
 <table>
 <thead>
 <tr>
