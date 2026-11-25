@@ -27,7 +27,7 @@ modDevTools.panel.RegenerateForm = function (config) {
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modChunk',
-                    id: 'moddevtools-search-chunks',
+                    id: 'moddevtools-regenerate-chunks',
                     boxLabel: _('chunks'),
                     checked: true,
                     border: false
@@ -38,7 +38,7 @@ modDevTools.panel.RegenerateForm = function (config) {
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modTemplate',
-                    id: 'moddevtools-search-templates',
+                    id: 'moddevtools-regenerate-templates',
                     boxLabel: _('templates'),
                     checked: true,
                     border: false
@@ -49,7 +49,7 @@ modDevTools.panel.RegenerateForm = function (config) {
                     name: 'filters[]',
                     hiddenName: 'filters[]',
                     inputValue: 'modResource',
-                    id: 'moddevtools-search-resources',
+                    id: 'moddevtools-regenerate-resources',
                     boxLabel: _('resources'),
                     checked: true,
                     border: false

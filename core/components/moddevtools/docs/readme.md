@@ -11,7 +11,8 @@ If you would like to make a contribution, you can send a payment to kireevvit@gm
 
 ## Features
 
-- Custom Manager Page for search and replace text in Chunks and Templates
+- Custom Manager Page for search and replace text in Chunks and Templates, with
+  wildcards, regular expressions and a preview of the replacements
 - Additional tabs to edit linked elements on the Chunks, Templates and Snippets edit page
 - Breadcrumb path on the resource create/edit page (in MODX 2.x)
 

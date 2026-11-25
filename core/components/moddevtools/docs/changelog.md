@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-11-25
+
+### Added
+
+- Wildcard and regular expression modes in the search and replace
+- Options to ignore case and find whole words in the plain text search
+- Preview to select the matches to replace
+
+### Changed
+
+- Don't expose server paths in the manager page options
+- Don't save an element when skipping a match
+
+### Fixed
+
+- Check the view permissions in the content search
+- Restrict the change template processor to the template and clear the resource cache
+- Fix replacing in templates in MODX 3
+- Search the current file content of static elements
+- Fix search and replace issues with multibyte and HTML characters, `%` and `_`
+- Fix PHP errors without an initialized user or a further occurrence
+- Fix JavaScript errors in the resources grid, element panels and resource form
+- Fix the change template window showing the template ID
+
 ## [1.3.9] - 2026-03-18
 
 ### Fixed

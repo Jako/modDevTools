@@ -18,7 +18,7 @@
   color: #555555;
 }
 #modx-panel-resource .edit-template .icon:hover {
-  color: rgb(59.5, 59.5, 59.5);
+  color: rgb(23.3333333333%, 23.3333333333%, 23.3333333333%);
 }
 
 #moddevtools-search-results .moddevtools-el-header {
@@ -140,11 +140,11 @@
 }
 
 .treehillstudio_window a {
-  color: rgb(178.3157894737, 191.4868421053, 39.5131578947);
+  color: rgb(69.9277605779%, 75.092879257%, 15.4953560372%);
   text-decoration: none;
 }
 .treehillstudio_window a:hover {
-  color: rgb(119.2631578947, 128.0723684211, 26.4276315789);
+  color: rgb(46.7698658411%, 50.2244582043%, 10.3637770898%);
 }
 
 .home-panel.debug {
@@ -160,7 +160,7 @@
   z-index: 10;
 }
 .ribbon:before, .ribbon:after {
-  border: 5px solid rgb(113.5, 0, 0);
+  border: 5px solid rgb(44.5098039216%, 0%, 0%);
   content: "";
   display: block;
   position: absolute;
@@ -224,5 +224,20 @@
 }
 #modx-panel-resource.modx3 .edit-template .icon:hover {
   font-size: 11px;
-  color: rgb(55.5, 55.5, 55.5);
+  color: rgb(21.7647058824%, 21.7647058824%, 21.7647058824%);
+}
+
+.moddevtools-preview-line {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+.moddevtools-preview-line del {
+  background: #fdd;
+  color: #a00;
+  text-decoration: line-through;
+}
+.moddevtools-preview-line ins {
+  background: #dfd;
+  color: #060;
+  text-decoration: none;
 }

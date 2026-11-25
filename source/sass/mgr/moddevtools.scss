@@ -287,3 +287,20 @@ $primary: #00948e;
 }
 
 @import 'modx3';
+
+.moddevtools-preview-line {
+  font-family: monospace;
+  white-space: pre-wrap;
+
+  del {
+    background: #fdd;
+    color: #a00;
+    text-decoration: line-through;
+  }
+
+  ins {
+    background: #dfd;
+    color: #060;
+    text-decoration: none;
+  }
+}

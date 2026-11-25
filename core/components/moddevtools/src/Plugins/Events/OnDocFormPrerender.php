@@ -40,6 +40,9 @@ class OnDocFormPrerender extends Plugin
             $this->modx->controller->addHtml("<script>
             Ext.onReady(function() {
                 var templateCombo = Ext.getCmp('modx-resource-template');
+                if (!templateCombo || !templateCombo.label) {
+                    return;
+                }
                 templateCombo.label.update(templateCombo.fieldLabel + '&nbsp;<a class=\"edit-template\" href=\"?a=element/template/update' + '&id=' + templateCombo.value + '\"><i class=\"icon icon-edit\"></i></a>');
             });
             </script>");

@@ -14,6 +14,7 @@ namespace TreehillStudio\ModDevTools;
 use modAccessibleObject;
 use modChunk;
 use modDevToolsLink;
+use modElement;
 use modResource;
 use modTemplate;
 use modX;
@@ -47,7 +48,7 @@ class ModDevTools
      * The version
      * @var string $version
      */
-    public $version = '1.3.9';
+    public $version = '1.4.0';
 
     /**
      * The class options
@@ -99,21 +100,25 @@ class ModDevTools
 
         $this->modx->addPackage($this->namespace, $this->getOption('modelPath'));
 
+        // The service is created in the setup too, where no user or context is initialized
+        $sudo = $this->modx->user && $this->modx->user->get('sudo');
+        $checkPermissions = $this->modx->user && is_object($this->modx->context);
+
         // Add default options
         $this->options = array_merge($this->options, [
             'debug' => (bool)$this->getOption('debug', $options, false),
             'modxversion' => $modxversion['version'],
             'is_admin' => $this->modx->user && $this->modx->context && ($this->modx->user->get('sudo') || $modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
-            'accessRegenerate' => $this->modx->user->get('sudo') || $this->modx->hasPermission('system_perform_maintenance_tasks'),
-            'viewChunk' => $this->modx->user->get('sudo') || $this->modx->hasPermission('view_chunk'),
-            'saveChunk' => $this->modx->user->get('sudo') || $this->modx->hasPermission('save_chunk'),
-            'viewTemplate' => $this->modx->user->get('sudo') || $this->modx->hasPermission('view_template'),
-            'saveTemplate' => $this->modx->user->get('sudo') || $this->modx->hasPermission('save_template'),
-            'viewSnippet' => $this->modx->user->get('sudo') || $this->modx->hasPermission('view_snippet'),
-            'editSnippet' => $this->modx->user->get('sudo') || $this->modx->hasPermission('edit_snippet'),
-            'saveSnippet' => $this->modx->user->get('sudo') || $this->modx->hasPermission('save_snippet'),
-            'viewResource' => $this->modx->user->get('sudo') || $this->modx->hasPermission('view_document'),
-            'saveResource' => $this->modx->user->get('sudo') || $this->modx->hasPermission('save_document'),
+            'accessRegenerate' => $sudo || $checkPermissions && $this->modx->hasPermission('system_perform_maintenance_tasks'),
+            'viewChunk' => $sudo || $checkPermissions && $this->modx->hasPermission('view_chunk'),
+            'saveChunk' => $sudo || $checkPermissions && $this->modx->hasPermission('save_chunk'),
+            'viewTemplate' => $sudo || $checkPermissions && $this->modx->hasPermission('view_template'),
+            'saveTemplate' => $sudo || $checkPermissions && $this->modx->hasPermission('save_template'),
+            'viewSnippet' => $sudo || $checkPermissions && $this->modx->hasPermission('view_snippet'),
+            'editSnippet' => $sudo || $checkPermissions && $this->modx->hasPermission('edit_snippet'),
+            'saveSnippet' => $sudo || $checkPermissions && $this->modx->hasPermission('save_snippet'),
+            'viewResource' => $sudo || $checkPermissions && $this->modx->hasPermission('view_document'),
+            'saveResource' => $sudo || $checkPermissions && $this->modx->hasPermission('save_document'),
             'extractLines' => 6,
             'extractEllips' => '...',
             'extractSeparator' => '<br>',
@@ -169,8 +174,6 @@ class ModDevTools
         foreach ($links as $link) {
             $link->remove();
         }
-        // Reset autoincrement
-        $this->modx->query('ALTER TABLE ' . $this->modx->getTableName('modDevToolsLink') . ' AUTO_INCREMENT = 0;');
     }
 
     /**
@@ -361,60 +364,354 @@ class ModDevTools
     }
 
     /**
-     * @param $content
-     * @param $search
-     * @param int $offset
+     * The supported search modes
+     *
+     * - text: The search string is searched literally
+     * - wildcard: `*` matches any text in a line and `?` any single character
+     * - regex: The search string is a PCRE regular expression (without delimiters)
+     */
+    const SEARCH_MODES = ['text', 'wildcard', 'regex'];
+
+    /**
+     * Get the element types, that can be searched
+     *
+     * @return array
+     */
+    public function getSearchElementMap()
+    {
+        return [
+            'modChunk' => [
+                'nameField' => 'name',
+                'content' => 'snippet',
+                'type' => 'chunk',
+                'view' => 'viewChunk',
+                'save' => 'saveChunk',
+            ],
+            'modTemplate' => [
+                'nameField' => 'templatename',
+                'content' => 'content',
+                'type' => 'template',
+                'view' => 'viewTemplate',
+                'save' => 'saveTemplate',
+            ],
+        ];
+    }
+
+    /**
+     * Get the content of an element. The content of static elements is read from the file, since the file may
+     * have been changed outside of MODX and the content in the database is only a copy.
+     *
+     * @param modElement $element
+     * @param string $contentField The content field of the element
      * @return string
      */
-    public function getSearchContent($content, $search, $offset = 0)
+    public function getElementContent($element, $contentField)
     {
-        // clean content
-        $content = str_replace(["\r\n", "\r"], "\n", $content);
+        if ($element->isStatic()) {
+            $file = $element->getSourceFile();
+            if ($file && file_exists($file)) {
+                return (string)$element->getFileContent();
+            }
+        }
+        return (string)$element->get($contentField);
+    }
 
-        $offsetString = substr($content, 0, $offset);
+    /**
+     * Get the normalized search options from request properties
+     *
+     * @param array $properties
+     * @return array
+     */
+    public function getSearchOptions($properties)
+    {
+        $true = [true, 1, '1', 'true'];
+        $mode = isset($properties['mode']) && in_array($properties['mode'], self::SEARCH_MODES, true) ? $properties['mode'] : 'text';
+        // Ignore case and whole words are only available for the plain text search
+        $text = ($mode === 'text');
+        return [
+            'mode' => $mode,
+            'ignoreCase' => $text && isset($properties['ignorecase']) && in_array($properties['ignorecase'], $true, true),
+            'wholeWord' => $text && isset($properties['wholeword']) && in_array($properties['wholeword'], $true, true),
+        ];
+    }
+
+    /**
+     * Build a PCRE pattern from the search string and the search options
+     *
+     * @param string $search The search string
+     * @param array $options The search options, see getSearchOptions()
+     * @param string $error Receives the lexicon key of the error, if the pattern is not usable
+     * @return string|false The pattern or false, if the pattern is not usable
+     */
+    public function buildPattern($search, $options = [], &$error = '')
+    {
+        $error = '';
+        $search = (string)$search;
+        $mode = isset($options['mode']) ? $options['mode'] : 'text';
+        if ($search === '') {
+            $error = 'moddevtools.err_pattern_empty';
+            return false;
+        }
+
+        switch ($mode) {
+            case 'wildcard':
+                $parts = preg_split('/([*?])/', $search, -1, PREG_SPLIT_DELIM_CAPTURE);
+                $body = '';
+                foreach ($parts as $part) {
+                    if ($part === '*') {
+                        $body .= '[^\r\n]*?';
+                    } elseif ($part === '?') {
+                        $body .= '[^\r\n]';
+                    } else {
+                        $body .= preg_quote($part, "\x01");
+                    }
+                }
+                break;
+            case 'regex':
+                $body = str_replace("\x01", '', $search);
+                break;
+            default:
+                $body = preg_quote($search, "\x01");
+        }
+        if (!empty($options['wholeWord'])) {
+            $body = '(?<!\w)(?:' . $body . ')(?!\w)';
+        }
+
+        $modifiers = (string)$this->getOption('pcreModifier', [], 'u');
+        if (!empty($options['ignoreCase'])) {
+            $modifiers .= 'i';
+        }
+        if ($mode === 'regex') {
+            $modifiers .= 'm';
+        }
+        $pattern = "\x01" . $body . "\x01" . $modifiers;
+
+        // Check the pattern and that it doesn't match an empty text
+        $warning = '';
+        set_error_handler(function ($no, $str) use (&$warning) {
+            $warning = $str;
+            return true;
+        });
+        $result = preg_match($pattern, '');
+        restore_error_handler();
+        if ($result === false || $warning !== '') {
+            $this->debug('Invalid pattern ' . $pattern . ': ' . $warning);
+            $error = 'moddevtools.err_pattern_invalid';
+            return false;
+        }
+        if ($result === 1) {
+            $error = 'moddevtools.err_pattern_empty';
+            return false;
+        }
+
+        return $pattern;
+    }
+
+    /**
+     * Run preg_match_all with a pattern and retry without the unicode modifier, if the text is not valid UTF-8
+     *
+     * @param string $pattern
+     * @param string $text
+     * @param array $matches
+     * @param int $flags
+     * @return int|false
+     */
+    protected function pregAll($pattern, $text, &$matches, $flags = PREG_OFFSET_CAPTURE)
+    {
+        $count = @preg_match_all($pattern, $text, $matches, $flags);
+        if ($count === false && preg_last_error() === PREG_BAD_UTF8_ERROR) {
+            $position = strrpos($pattern, "\x01");
+            $pattern = substr($pattern, 0, $position + 1) . str_replace('u', '', substr($pattern, $position + 1));
+            $count = @preg_match_all($pattern, $text, $matches, $flags);
+        }
+        return $count;
+    }
+
+    /**
+     * Find all matches of a pattern in a content. The positions are byte offsets.
+     *
+     * @param string $content
+     * @param string $pattern
+     * @return array|false List of matches with start, end, text and groups or false on a regex error
+     */
+    public function findMatches($content, $pattern)
+    {
+        $sets = [];
+        if ($this->pregAll($pattern, $content, $sets, PREG_SET_ORDER | PREG_OFFSET_CAPTURE) === false) {
+            return false;
+        }
+        $matches = [];
+        foreach ($sets as $set) {
+            if ($set[0][0] === '') {
+                continue;
+            }
+            $groups = [];
+            foreach ($set as $group) {
+                $groups[] = $group[0];
+            }
+            $matches[] = [
+                'start' => $set[0][1],
+                'end' => $set[0][1] + strlen($set[0][0]),
+                'text' => $set[0][0],
+                'groups' => $groups,
+            ];
+        }
+        return $matches;
+    }
+
+    /**
+     * Get the replacement for a match. In the regex mode the groups can be used with $1, ${1} or \1.
+     *
+     * @param string $replace
+     * @param array $match
+     * @param string $mode
+     * @return string
+     */
+    public function expandReplacement($replace, $match, $mode = 'text')
+    {
+        if ($mode !== 'regex') {
+            return $replace;
+        }
+        $groups = $match['groups'];
+        return preg_replace_callback('/\\\\(\\\\|n|t|\d{1,2})|\$\{(\d{1,2})\}|\$(\d{1,2})/', function ($m) use ($groups) {
+            if ($m[1] === '\\') {
+                return '\\';
+            } elseif ($m[1] === 'n') {
+                return "\n";
+            } elseif ($m[1] === 't') {
+                return "\t";
+            }
+            $index = (int)implode('', array_slice($m, 1));
+            return isset($groups[$index]) ? $groups[$index] : '';
+        }, $replace);
+    }
+
+    /**
+     * Replace matches in a content
+     *
+     * @param string $content
+     * @param array $matches The matches from findMatches()
+     * @param string $replace
+     * @param string $mode
+     * @param array|null $only The indexes of the matches to replace or null for all matches
+     * @return string
+     */
+    public function applyReplacements($content, $matches, $replace, $mode = 'text', $only = null)
+    {
+        $result = '';
+        $position = 0;
+        foreach ($matches as $index => $match) {
+            if ($only !== null && !in_array($index, $only, true)) {
+                continue;
+            }
+            $result .= substr($content, $position, $match['start'] - $position) .
+                $this->expandReplacement($replace, $match, $mode);
+            $position = $match['end'];
+        }
+        return $result . substr($content, $position);
+    }
+
+    /**
+     * Highlight the matches of a pattern in a text and escape the text for the HTML output
+     *
+     * @param string $text
+     * @param string $pattern
+     * @return string
+     */
+    protected function highlightText($text, $pattern)
+    {
+        $output = '';
+        $position = 0;
+        $matches = [];
+        if ($this->pregAll($pattern, $text, $matches) !== false) {
+            foreach ($matches[0] as $match) {
+                if ($match[0] === '') {
+                    continue;
+                }
+                $class = ($this->options['highlightCount'] == 0) ? 'first-string' : 'found-string';
+                $this->options['highlightCount']++;
+                $output .= $this->escape(substr($text, $position, $match[1] - $position)) .
+                    '<span class="' . $class . '">' . $this->escape($match[0]) . '</span>';
+                $position = $match[1] + strlen($match[0]);
+            }
+        }
+        return $output . $this->escape(substr($text, $position));
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    protected function escape($text)
+    {
+        return htmlspecialchars($text, ENT_COMPAT | ENT_SUBSTITUTE);
+    }
+
+    /**
+     * @param string $content The element content
+     * @param string $search The search string
+     * @param int $offset The character offset in the content, where the next match is searched
+     * @param array $options The search options, see getSearchOptions()
+     * @return string
+     */
+    public function getSearchContent($content, $search, $offset = 0, $options = [])
+    {
+        $pattern = $this->buildPattern($search, $options);
+        if ($pattern === false) {
+            return '';
+        }
+
+        // The offset is a character offset into the raw content, so it is translated to the cleaned content
+        $offset = max(0, (int)$offset);
+        $offsetString = str_replace(["\r\n", "\r"], "\n", mb_substr($content, 0, $offset));
+        $content = $offsetString . str_replace(["\r\n", "\r"], "\n", mb_substr($content, $offset));
+        $offset = mb_strlen($offsetString);
         $lineLeftString = '';
 
         if ($offset) {
             $this->options['highlightCount'] = 1;
-            $pattern = '/' . preg_quote($search, '/') . '/' . $this->options['pcreModifier'];
-            $count = preg_match_all($pattern, $content);
+            $matches = [];
+            $count = $this->pregAll($pattern, $content, $matches);
 
             if ($count > 1) {
                 $linesLeft = $this->mb_strrposnth(mb_substr($offsetString, 0, $offset), "\n", $this->options['extractLines'] / 2);
-                $lineLeftString = (($linesLeft) ? $this->options['extractEllips'] . "\n" : '') . ltrim(mb_substr($offsetString, $linesLeft), "\n");
-                $lineLeftString = preg_replace_callback($pattern, [$this, 'highlight'], $lineLeftString);
+                $lineLeft = mb_substr($offsetString, (int)$linesLeft);
+                $lineLeftString = (($linesLeft) ? $this->options['extractEllips'] . "\n" : '') .
+                    $this->highlightText(ltrim($lineLeft, "\n"), $pattern);
             } else {
                 $offset = 0;
             }
         }
 
-        return '<pre>' . $lineLeftString . $this->getExtract(substr($content, $offset), $search) . '</pre>';
+        return '<pre>' . $lineLeftString . $this->getExtract(mb_substr($content, $offset), $pattern) . '</pre>';
     }
 
     /**
      * Returns extracts with highlighted searchterms
      *
      * @param string $text
-     * @param string $searchString
+     * @param string $pattern
      * @return string
      */
-    function getExtract($text, $searchString)
+    public function getExtract($text, $pattern)
     {
         $output = '';
 
-        if (($text !== '') && ($searchString !== '')) {
+        if (($text !== '') && ($pattern !== '')) {
             $extracts = [];
 
             $textLength = mb_strlen($text);
-            $wordLength = mb_strlen($searchString);
-
-            $pattern = '/' . preg_quote($searchString, '/') . '/' . $this->options['pcreModifier'];
 
             // Collect matches
             $matches = [];
-            $nbr = preg_match_all($pattern, $text, $matches, PREG_OFFSET_CAPTURE);
-            for ($i = 0; $i < $nbr && $i < $this->options['extractQuantity']; $i++) {
-                $wordLeft = mb_strlen(mb_substr($text, 0, $matches[0][$i][1]));
+            $nbr = (int)$this->pregAll($pattern, $text, $matches);
+            for ($i = 0; $i < $nbr && count($extracts) < $this->options['extractQuantity']; $i++) {
+                if ($matches[0][$i][0] === '') {
+                    continue;
+                }
+                // PREG_OFFSET_CAPTURE returns byte offsets
+                $wordLength = mb_strlen($matches[0][$i][0]);
+                $wordLeft = mb_strlen(substr($text, 0, $matches[0][$i][1]));
                 $wordRight = $wordLeft + $wordLength - 1;
 
                 $linesLeft = $this->mb_strrposnth(mb_substr($text, 0, $wordLeft), "\n", $this->options['extractLines'] / 2);
@@ -424,7 +721,6 @@ class ModDevTools
                 $right = ($linesRight !== false) ? $wordRight + $linesRight - 1 : $textLength;
                 $right = ($right > $textLength) ? $textLength : $right;
                 $extracts[] = [
-                    'word' => $searchString,
                     'wordLeft' => $wordLeft,
                     'wordRight' => $wordRight,
                     'left' => $left,
@@ -472,24 +768,12 @@ class ModDevTools
                 $this->options['highlightCount'] = 0;
                 $separation = ($extracts[$i]['etcRight'] != '') ? $this->options['extractSeparator'] : '';
 
-                $extract = htmlspecialchars(mb_substr($text, $extracts[$i]['left'], $extracts[$i]['right'] - $extracts[$i]['left'] + 1));
-                $extract = preg_replace_callback($pattern, [$this, 'highlight'], $extract);
+                $extract = $this->highlightText(mb_substr($text, $extracts[$i]['left'], $extracts[$i]['right'] - $extracts[$i]['left'] + 1), $pattern);
 
                 $output .= $extracts[$i]['etcLeft'] . $extract . $extracts[$i]['etcRight'] . $separation;
             }
         }
         return $output;
-    }
-
-    /**
-     * @param array $matches
-     * @return string
-     */
-    private function highlight(array $matches)
-    {
-        $class = ($this->options['highlightCount'] == 0) ? 'first-string' : 'found-string';
-        $this->options['highlightCount']++;
-        return '<span class="' . $class . '">' . $matches[0] . '</span>';
     }
 
     /**
@@ -549,5 +833,27 @@ class ModDevTools
             }
         }
         return $pos;
+    }
+
+    /**
+     * Get the options used by the manager scripts, so that no server paths are output in the manager
+     *
+     * @param array|null $options Options to filter instead of the class options
+     * @return array
+     */
+    public function getManagerOptions(?array $options = null): array
+    {
+        return array_intersect_key($options ?? $this->options, array_flip([
+            'assetsUrl',
+            'connectorUrl',
+            'debug',
+            'is_admin',
+            'modxversion',
+            'saveChunk',
+            'saveResource',
+            'saveSnippet',
+            'saveTemplate',
+            'version',
+        ]));
     }
 }

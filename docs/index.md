@@ -13,7 +13,8 @@ resource edit page.
 
 ### Features
 
-- Custom Manager Page for search and replace text in the content of chunks and templates
+- Custom Manager Page for search and replace text in the content of chunks and templates,
+  with wildcards, regular expressions and a preview of the replacements
 - Additional tabs in the chunk, snippet, template edit page
 - Linked breadcrumb path on the resource edit page
 

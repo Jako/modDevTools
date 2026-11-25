@@ -39,13 +39,17 @@ class modDevToolsRegenerateProcessor extends Processor
         }
 
         $filters = $this->getProperty('filters');
+        if (!is_array($filters)) {
+            return $this->failure($this->modx->lexicon('invalid_data'));
+        }
+        $logLevel = $this->modx->getLogLevel();
         foreach ($filters as $class) {
             if (isset($this->map[$class])) {
                 $objects = $this->modx->getIterator($class);
                 foreach ($objects as $object) {
                     $this->modx->setLogLevel(xPDO::LOG_LEVEL_WARN); // Change log level to WARN
                     $this->moddevtools->parseContent($object);
-                    $this->modx->setLogLevel(xPDO::LOG_LEVEL_INFO); // Change log level to INFO
+                    $this->modx->setLogLevel($logLevel); // Restore the log level
                     $this->modx->log(xPDO::LOG_LEVEL_INFO,
                         'Regenerated links to ' . $this->map[$class]['type'] . ': ' .
                         $object->get($this->map[$class]['name']) . ' (' . $object->get('id') . ')'

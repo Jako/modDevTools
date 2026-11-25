@@ -54,7 +54,7 @@ class modDevToolsHomeManagerController extends modExtraManagerController
         $this->addHtml('<script type="text/javascript">
         Ext.onReady(function() {
             MODx.config.help_url = "https://jako.github.io/modDevTools/usage/";
-            modDevTools.config = ' . json_encode($this->moddevtools->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
+            modDevTools.config = ' . json_encode($this->moddevtools->getManagerOptions(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
             MODx.load({xtype: "moddevtools-page-home"});
         });
         </script>');

@@ -9,7 +9,7 @@
 namespace TreehillStudio\ModDevTools\Plugins;
 
 use modX;
-use ModDevTools;
+use TreehillStudio\ModDevTools\ModDevTools;
 
 /**
  * Class Plugin
@@ -96,7 +96,7 @@ abstract class Plugin
             $this->moddevtools->modx->controller->addJavascript($jsUrl . 'moddevtools.min.js?v=v' . $this->moddevtools->version);
         }
         $this->moddevtools->modx->controller->addHtml('<script type="text/javascript">
-			modDevTools.config = ' . json_encode($this->moddevtools->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
+			modDevTools.config = ' . json_encode($this->moddevtools->getManagerOptions(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
         </script>');
     }
 }

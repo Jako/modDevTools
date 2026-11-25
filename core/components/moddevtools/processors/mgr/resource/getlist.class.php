@@ -57,21 +57,17 @@ class modDevToolsResourceGetListProcessor extends modResourceGetListProcessor
         $c = parent::prepareQueryBeforeCount($c);
 
         $linkType = $this->getProperty('link_type', false);
-        if ($linkType === 'res-chunk' || $linkType === 'res-snip') {
-            $templates = [];
-            $resources = [];
+        if (in_array($linkType, ['res-chunk', 'res-snip'], true)) {
+            // The linked element type: 'chunk' or 'snip'
+            $element = substr($linkType, strlen('res-'));
 
-            if ($linkType === 'res-chunk') {
-                $templates = $this->getParentsByLink('temp-chunk');
-                $templates = array_merge($templates, $this->getParentsByLink('chunk-chunk', 'temp-chunk'));
-                $resources = $this->getParentsByLink('res-chunk');
-            } else if ($linkType === 'res-snip') {
-                $templates = $this->getParentsByLink('temp-snip');
-                $templates = array_merge($templates, $this->getParentsByLink('chunk-snip', 'temp-chunk'));
-                $resources = $this->getParentsByLink('res-snip');
-            }
+            // Templates using the element directly or via a chunk, and resources using the element
+            $templates = array_unique(array_merge(
+                $this->getParentsByLink('temp-' . $element),
+                $this->getParentsByLink('chunk-' . $element, 'temp-chunk')
+            ));
+            $resources = $this->getParentsByLink($linkType);
 
-            $templates = array_unique($templates);
             $tempCount = count($templates);
             $resCount = count($resources);
 

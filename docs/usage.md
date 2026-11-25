@@ -10,19 +10,48 @@ chunks and templates.
 
 ![img/search.png](img/moddevtools-search.png "Search Manager Page")
 
-Enter the string you want to search for and click the `Search` button. Below the
+Enter the text you want to search for and click the `Search` button. Below the
 search field there are checkboxes to limit the search to specific elements
 (chunks and templates).
 
-After a successful search, the code of all found elements is displayed, with the
-search text highlighted. A replacement must be made for each found element
-individually. For this purpose there are three buttons below the code block:
-`Replace`, `Replace all` and `Skip`.
+### Search options
 
-The `Replace` button replaces the search string at the position where the cursor
-is located (dark highlighting) with the replacement string. The `Skip` button
-moves the cursor to the next match. The `Replace All` button replaces all search
-strings in the code of the current element.
+| Option                | Description                                                                                                               |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `Plain text`          | The search text is searched literally. This is the default.                                                               |
+| `Wildcards`           | `*` matches any text within a line and `?` any single character, e.g. `tpl*Row` or `Pre?s`.                               |
+| `Regular expression`  | The search text is a PCRE regular expression without delimiters, e.g. ``&limit=`(\d+)` ``. `^` and `$` match at line ends. |
+| `Ignore case`         | Plain text only: ignores upper and lower case. Without this option the search is case-sensitive.                          |
+| `Whole words only`    | Plain text only: finds the search text only, if it isn't part of a longer word.                                           |
+
+The wildcard and regular expression searches are always case-sensitive (a regular
+expression can start with `(?i)` to ignore the case and use `\b` for word
+boundaries).
+
+In the regular expression mode the replacement can contain the matched groups as
+`$1`, `${1}` or `\1` (`$0` is the whole match) and `\n` or `\t` for a new line
+or a tab. In the other modes the replacement is used literally. A search text
+that can match an empty text (e.g. `a*`) or an invalid regular expression is
+rejected.
+
+### Replace
+
+After a successful search, the code of all found elements is displayed, with the
+search text highlighted and the number of matches in the title. For each found
+element there are four buttons below the code block: `Replace`, `Replace all`,
+`Skip` and `Preview`.
+
+The `Replace` button replaces the match at the position where the cursor is
+located (dark highlighting) with the replacement and moves the cursor to the
+next match. The `Skip` button only moves the cursor to the next match, without
+changing the element. The `Replace All` button replaces all matches in the code
+of the current element.
+
+The `Preview` button opens a window with a list of all matches (up to 500) of
+the element, showing the text that is removed (red) and the replacement
+(green) in its line. All matches are selected at first. Untick the matches you
+don't want to change and click `Replace selected`. If the element was changed
+after the preview was created, nothing is replaced and you have to search again.
 
 There are also two other buttons on the right side below the code element:
 `Update` and `Quick Update`. When you click the `Update` button, the element's edit

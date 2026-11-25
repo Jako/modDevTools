@@ -1,7 +1,7 @@
 {
   "name": "treehillstudio/moddevtools",
   "description": "Rapid site development helper for MODX",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "authors": [
     {
       "name": "Vitaly Kireev",
@@ -21,7 +21,8 @@
     }
   },
   "require": {
-    "php": ">=7.2.5"
+    "php": ">=7.2.5",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {

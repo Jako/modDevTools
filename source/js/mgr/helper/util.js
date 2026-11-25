@@ -23,27 +23,29 @@ modDevTools.util.getMenu = function (actions, grid, selected) {
             continue;
         }
         var a = actions[i];
-        if (!data.menu) {
+        if (!a['menu']) {
             if (a === '-') {
                 menu.push('-');
             }
             continue;
-        } else if (menu.length > 0 && /^remove/i.test(data.action)) {
-            menu.push('-');
         }
+        title = a['title'] || '';
         if (selected.length > 1) {
-            if (!data.multiple) {
+            if (!a['multiple']) {
                 continue;
-            } else if (typeof (data.multiple) == 'string') {
-                data.title = data.multiple;
+            } else if (typeof (a['multiple']) == 'string') {
+                // Don't change the action of the row, its button title would be changed too
+                title = a['multiple'];
             }
         }
-        if (!data.title) {
+        if (!title) {
             continue;
         }
-        cls = data.cls || '';
-        icon = data.icon || '';
-        title = a['title'] || '';
+        if (menu.length > 0 && /^remove/i.test(a['action'])) {
+            menu.push('-');
+        }
+        cls = a['cls'] || '';
+        icon = a['icon'] || '';
         action = a['action'] ? grid[a['action']] : '';
         menu.push({
             handler: action,

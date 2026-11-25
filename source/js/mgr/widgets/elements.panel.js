@@ -1,6 +1,7 @@
 modDevTools.panel.Elements = function (config) {
     config = config || {};
-    var panelId = (Ext.get('modx-content').query('.x-panel .container')) ? Ext.get('modx-content').query('.x-panel .container')[0].id : ''; //modx-panel-(chunk/template/...)
+    var panelContainers = Ext.get('modx-content').query('.x-panel .container');
+    var panelId = (panelContainers && panelContainers.length) ? panelContainers[0].id : ''; //modx-panel-(chunk/template/...)
     var panelType = (panelId) ? panelId.split('-').pop() : 'chunk';
     Ext.apply(config, {
         border: false,
@@ -103,7 +104,9 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                     key: "s",
                                     ctrl: true,
                                     fn: function () {
-                                        this.focusedButton.fireEvent('click');
+                                        if (this.focusedButton && !this.focusedButton.disabled) {
+                                            this.focusedButton.fireEvent('click');
+                                        }
                                     },
                                     scope: this
                                 }],
@@ -130,6 +133,9 @@ Ext.extend(modDevTools.panel.Elements, MODx.Panel, {
                                             keyup: {
                                                 fn: function () {
                                                     var button = Ext.getCmp('save-' + params.element + '-' + this.record.id);
+                                                    if (!button) {
+                                                        return;
+                                                    }
                                                     if (this.value !== this.getValue()) {
                                                         if (button.disabled) {
                                                             button.setDisabled(false);

@@ -140,19 +140,25 @@ Ext.extend(modDevTools.grid.Resources, MODx.grid.Grid, {
         var sels = this.getSelectionModel().getSelections();
         if (sels.length <= 0) return false;
         var r = sels[0].data;
-        if (!this.changeTemplateWindow) {
-            this.changeTemplateWindow = MODx.load({
-                xtype: 'moddevtools-window-change-template',
-                record: r,
-                listeners: {
-                    success: {
-                        fn: function () {
-                            this.refresh();
-                        }, scope: this
+        var grid = this;
+        // Create a fresh window each time, so the template combo shows the current template name
+        this.changeTemplateWindow = MODx.load({
+            xtype: 'moddevtools-window-change-template',
+            record: r,
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    }, scope: this
+                },
+                hide: {
+                    fn: function () {
+                        grid.changeTemplateWindow = null;
+                        this.destroy();
                     }
                 }
-            });
-        }
+            }
+        });
         this.changeTemplateWindow.setValues(r);
         this.changeTemplateWindow.show(e.target);
         return true;
